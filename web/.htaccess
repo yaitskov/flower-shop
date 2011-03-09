@@ -13,6 +13,8 @@ Options +FollowSymLinks +ExecCGI
   #RewriteRule .* - [L]
 
   # we check if the .html version is here (caching)
+  #  RewriteRule ^zzz$ index.php
+  #@3 [QSA,L]  
   RewriteRule ^$ index.html [QSA]
   RewriteRule ^([^.]+)$ $1.html [QSA]
   RewriteCond %{REQUEST_FILENAME} !-f

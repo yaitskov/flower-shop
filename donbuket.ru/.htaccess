@@ -1,0 +1,48 @@
+Options +FollowSymLinks +ExecCGI -Indexes
+
+#<Files ~ 
+# <Files ~/e.sh>
+#      order deny,allow
+#      deny from all
+# </Files>
+<IfModule mod_rewrite.c>
+  RewriteEngine On
+
+#  Redirect permanent /web/sf /lib/symfony/data/web/sf
+  # uncomment the following line, if you are having trouble
+  # getting no_script_name to work
+#  RewriteBase /
+
+  # we skip all files with .something
+  #RewriteCond %{REQUEST_URI} \..+$
+  #RewriteCond %{REQUEST_URI} !\.html$
+  #RewriteRule .* - [L]
+  # deny access to sh
+#  RewriteCond %{THE_REQUEST} ^.+$ [NC]
+#  RewriteRule ^(apps/.*|cache/.*|config/.*|data/.*|.*\.sh|lib/.*|log/.*|plan|plugins/.*|symfony|test/.*)$ - [F,L]
+
+  # we check if the .html version is here (caching)
+  #  RewriteRule ^zzz$ index.php
+  #@3 [QSA,L]  
+#  RewriteRule ^$ index.html [QSA]
+#  RewriteRule ^([^.]+)$ $1.html [QSA]
+# 
+#  RewriteCond %{THE_REQUEST} ^.+$ [NC]
+#  RewriteRule ^web/sf/(.+)$ lib/symfony/data/web/sf/$1
+
+#  RewriteRule ^.*sh$ / [L]
+
+#  RewriteRule ^a.html$ b.html    [L]
+#  RewriteRule ^.*.php$ - [F]
+  # RewriteRule ^a.sh$ /web/index.php [QSA,L]      
+  # RewriteRule ^enterftp.sh$ /web/index.php [QSA,L]
+  # RewriteRule ^e.sh$ /web/index.php [QSA,L]  
+  RewriteRule ^$ index.php [L]
+  # no, so we redirect to our front web controller
+  RewriteCond %{REQUEST_FILENAME} !-f
+#  RewriteCond %{REQUEST_FILENAME} !-d
+  RewriteRule ^(.*)$ index.php [L]
+#  RewriteRule ^ - [L]
+
+
+</IfModule>

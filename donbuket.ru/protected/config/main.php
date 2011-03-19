@@ -11,7 +11,7 @@ return array(
 
 	// preloading 'log' component
 	'preload'=>array('log'),
-
+        'language' => 'ru',
 	// autoloading model and component classes
 	'import'=>array(
 		'application.models.*',

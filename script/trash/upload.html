@@ -1,0 +1,49 @@
+<html>
+  <title>Test</title>
+  <head>
+    <style type="text/css">
+
+
+      .browse-common {
+      width:150px;
+      height: 30px;      
+      max-width:150px;
+      max-height: 30px;
+
+      }
+      
+      .browse {
+      overflow:hidden;
+      border: solid 1px blue;
+
+      }
+
+      
+      .browse-image {
+      z-index: 1;
+      background-color:#cc0000; 
+      font-weight:bold; 
+      font-size:10px;
+      text-align: center;
+      vertical-align: middle;
+      }
+      
+      .browse-file {
+      margin-top: -24px;
+      z-index: 2;
+      opacity: 0.2;
+      -moz-opacity:0.2; 
+      filter:alpha(opacity: 0.2);       
+      }
+
+    </style>
+  </head>
+  <body>
+    <form>
+      <div class="browse-common browse"> 
+        <div class="browse-common browse-image">Open File</div>
+        <input type="file" class="browse-common browse-file" name="openssme"/>
+      </div>
+    </form>
+  </body>
+</html>

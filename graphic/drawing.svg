@@ -1,0 +1,442 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:xlink="http://www.w3.org/1999/xlink"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   width="1024"
+   height="600"
+   id="svg2"
+   version="1.1"
+   inkscape:version="0.48.0 r9654"
+   sodipodi:docname="drawing.svg"
+   inkscape:export-filename="/home/grid/pro/donbuket/default.png"
+   inkscape:export-xdpi="115.2"
+   inkscape:export-ydpi="115.2">
+  <defs
+     id="defs4">
+    <linearGradient
+       id="linearGradient3780">
+      <stop
+         style="stop-color:#fff38e;stop-opacity:1;"
+         offset="0"
+         id="stop3782" />
+      <stop
+         style="stop-color:#ffaaaa;stop-opacity:0;"
+         offset="1"
+         id="stop3784" />
+    </linearGradient>
+    <linearGradient
+       inkscape:collect="always"
+       xlink:href="#linearGradient3780"
+       id="linearGradient3786"
+       x1="346.48233"
+       y1="443.24017"
+       x2="349.51279"
+       y2="1133.1743"
+       gradientUnits="userSpaceOnUse"
+       gradientTransform="scale(1.1283784,1)" />
+    <filter
+       id="filter4019"
+       inkscape:label="Glow"
+       inkscape:menu="Shadows and Glows"
+       inkscape:menu-tooltip="Glow of object's own color at the edges"
+       color-interpolation-filters="sRGB">
+      <feGaussianBlur
+         id="feGaussianBlur4021"
+         stdDeviation="5"
+         result="result91" />
+      <feComposite
+         id="feComposite4023"
+         in2="result91"
+         in="SourceGraphic"
+         operator="over" />
+    </filter>
+    <filter
+       id="filter4025"
+       inkscape:label="Glow"
+       inkscape:menu="Shadows and Glows"
+       inkscape:menu-tooltip="Glow of object's own color at the edges"
+       color-interpolation-filters="sRGB">
+      <feGaussianBlur
+         id="feGaussianBlur4027"
+         stdDeviation="5"
+         result="result91" />
+      <feComposite
+         id="feComposite4029"
+         in2="result91"
+         in="SourceGraphic"
+         operator="over"
+         result="fbSourceGraphic" />
+      <feColorMatrix
+         result="fbSourceGraphicAlpha"
+         in="fbSourceGraphic"
+         values="0 0 0 -1 0 0 0 0 -1 0 0 0 0 -1 0 0 0 0 1 0"
+         id="feColorMatrix4031" />
+      <feGaussianBlur
+         id="feGaussianBlur4033"
+         stdDeviation="5"
+         result="result91"
+         in="fbSourceGraphic" />
+      <feComposite
+         id="feComposite4035"
+         in2="result91"
+         in="fbSourceGraphic"
+         operator="over" />
+    </filter>
+    <filter
+       inkscape:collect="always"
+       id="filter4105"
+       x="-0.052290503"
+       width="1.104581"
+       y="-0.17018183"
+       height="1.3403636"
+       color-interpolation-filters="sRGB">
+      <feGaussianBlur
+         inkscape:collect="always"
+         stdDeviation="3.9"
+         id="feGaussianBlur4107" />
+    </filter>
+    <filter
+       inkscape:collect="always"
+       id="filter4121"
+       color-interpolation-filters="sRGB">
+      <feGaussianBlur
+         inkscape:collect="always"
+         stdDeviation="3.6480294"
+         id="feGaussianBlur4123" />
+    </filter>
+    <filter
+       inkscape:collect="always"
+       id="filter4183"
+       color-interpolation-filters="sRGB">
+      <feGaussianBlur
+         inkscape:collect="always"
+         stdDeviation="0.19856298"
+         id="feGaussianBlur4185" />
+    </filter>
+  </defs>
+  <sodipodi:namedview
+     id="base"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageopacity="0.0"
+     inkscape:pageshadow="2"
+     inkscape:zoom="1.11"
+     inkscape:cx="514.52176"
+     inkscape:cy="418.21092"
+     inkscape:document-units="px"
+     inkscape:current-layer="layer1"
+     showgrid="false"
+     inkscape:window-width="1440"
+     inkscape:window-height="811"
+     inkscape:window-x="0"
+     inkscape:window-y="33"
+     inkscape:window-maximized="1" />
+  <metadata
+     id="metadata7">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title></dc:title>
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <g
+     inkscape:label="Layer 1"
+     inkscape:groupmode="layer"
+     id="layer1"
+     transform="translate(0,-452.36218)">
+    <rect
+       style="fill:url(#linearGradient3786);fill-opacity:1"
+       id="rect3004"
+       width="1024"
+       height="600"
+       x="0"
+       y="452.36218" />
+    <flowRoot
+       xml:space="preserve"
+       id="flowRoot3945"
+       style="font-size:40px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans"
+       transform="translate(0,452.36218)"><flowRegion
+         id="flowRegion3947"><rect
+           id="rect3949"
+           width="125.25892"
+           height="122.22845"
+           x="137.38075"
+           y="-80.842819" /></flowRegion><flowPara
+         id="flowPara3951"></flowPara></flowRoot>    <flowRoot
+       xml:space="preserve"
+       id="flowRoot3953"
+       style="font-size:40px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans"
+       transform="translate(0,452.36218)"><flowRegion
+         id="flowRegion3955"><rect
+           id="rect3957"
+           width="254.55844"
+           height="44.446712"
+           x="134.3503"
+           y="226.24356" /></flowRegion><flowPara
+         id="flowPara3959">HehhhasdfHeasdfsfdafsdsdfa</flowPara></flowRoot>    <path
+       style="fill:none;stroke:none"
+       d="m 3.0304573,526.64124 c 0,0 31.2835797,43.06073 77.7817477,39.39595 64.738765,-5.10242 76.771595,-50.50763 165.665015,-46.46701 97.06364,4.41199 48.48732,9.09137 262.63965,-3.03046 54.47041,-3.08323 125.25893,37.37564 125.25893,37.37564"
+       id="path3969"
+       inkscape:connector-curvature="0"
+       sodipodi:nodetypes="csssc" />
+    <flowRoot
+       xml:space="preserve"
+       id="flowRoot4127"
+       style="font-size:16px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans"
+       transform="translate(0,452.36218)"><flowRegion
+         id="flowRegion4129"><rect
+           id="rect4131"
+           width="155.05841"
+           height="77.529205"
+           x="243.6993"
+           y="167.65471"
+           style="font-size:16px" /></flowRegion><flowPara
+         id="flowPara4133"></flowPara></flowRoot>    <text
+       xml:space="preserve"
+       style="font-size:14px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans"
+       x="277.03433"
+       y="173.96815"
+       id="text4135"
+       sodipodi:linespacing="125%"
+       transform="translate(0,452.36218)"><tspan
+         sodipodi:role="line"
+         id="tspan4137"
+         x="277.03433"
+         y="173.96815" /></text>
+    <g
+       id="g4470"
+       transform="translate(874.40154,-200.09009)">
+      <image
+         transform="matrix(-0.99999169,-0.00407657,-0.00407657,0.99999169,0,0)"
+         width="93.455048"
+         height="28.715239"
+         xlink:href="petal.png"
+         id="image4256"
+         x="-139.08427"
+         y="600.6839" />
+      <flowRoot
+         transform="translate(-193.39304,403.42346)"
+         style="font-size:18px;font-style:italic;font-variant:normal;font-weight:500;font-stretch:normal;text-align:start;line-height:125%;letter-spacing:1.85000002px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;fill:#80c087;fill-opacity:1;stroke:none;filter:url(#filter4183);font-family:URW Chancery L;-inkscape-font-specification:URW Chancery L Medium Italic"
+         id="flowRoot4258"
+         xml:space="preserve"><flowRegion
+           id="flowRegion4260"><rect
+             style="font-size:18px;font-style:italic;font-variant:normal;font-weight:500;font-stretch:normal;text-align:start;line-height:125%;letter-spacing:1.85000002px;writing-mode:lr-tb;text-anchor:start;fill:#80c087;fill-opacity:1;font-family:URW Chancery L;-inkscape-font-specification:URW Chancery L Medium Italic"
+             y="198.46436"
+             x="255.06352"
+             height="28.539883"
+             width="74.131073"
+             id="rect4262" /></flowRegion><flowPara
+           id="flowPara4264">Выход</flowPara></flowRoot>    </g>
+    <path
+       style="fill:#80c087;fill-opacity:1;stroke:none;filter:url(#filter4121)"
+       d="m -18.275109,502.1753 c 1.907586,21.65999 45.944243,65.88248 65.762604,80.08917 17.304915,12.40494 31.157281,17.98189 72.693725,-12.2798 41.53645,-30.26169 90.94066,-62.0541 184.88485,-48.92212 93.94419,13.13198 215.87718,-31.49704 314.15744,22.22336 53.29795,29.13288 129.18464,-1.19544 118.18785,-19.1929 -26.23173,-42.93112 68.25308,-14.32558 66.40297,-35.04971 -2.01311,-22.54987 -15.0358,-48.60865 -15.0358,-48.60865 l -770.503421,7.11307 c 0,0 -39.023535,26.5439 -36.550218,54.62758 z"
+       id="path3010"
+       inkscape:connector-curvature="0"
+       sodipodi:nodetypes="sszzsssccs"
+       transform="matrix(1.0277185,0,0,1.1809476,101.54138,-82.840612)" />
+    <text
+       xml:space="preserve"
+       style="font-size:56px;font-style:italic;font-variant:normal;font-weight:500;font-stretch:normal;text-align:start;line-height:0%;letter-spacing:14.27999687px;word-spacing:20.17932129px;writing-mode:lr-tb;text-anchor:start;fill:#ececec;fill-opacity:1;stroke:none;filter:url(#filter4025);font-family:URW Chancery L;-inkscape-font-specification:URW Chancery L Medium Italic"
+       id="text3971"
+       sodipodi:linespacing="0%"
+       transform="translate(140,-2)"><textPath
+         xlink:href="#path3969"
+         id="textPath3995"><tspan
+   id="tspan3973"
+   style="font-size:56px;font-style:italic;font-variant:normal;font-weight:500;font-stretch:normal;text-align:start;line-height:0%;letter-spacing:14.27999687px;word-spacing:20.17932129px;writing-mode:lr-tb;text-anchor:start;fill:#ececec;fill-opacity:1;font-family:URW Chancery L;-inkscape-font-specification:URW Chancery L Medium Italic"><tspan
+     id="tspan3975"
+     y="514.98065"
+     x="-29.346003"
+     dy="-10.490002 -6.9100008 6.4900012 0 0 0 0 -6.6300044"
+     dx="121.21837 0 -0.039999999 0 0 0 0 0 0 5.2199998 -0.55000013 -5.1099997"
+     rotate="350.7999 0"
+     style="font-size:56px;font-style:italic;font-variant:normal;font-weight:500;font-stretch:normal;text-align:start;line-height:0%;letter-spacing:14.27999687px;word-spacing:20.17932129px;writing-mode:lr-tb;text-anchor:start;fill:#ececec;fill-opacity:1;font-family:URW Chancery L;-inkscape-font-specification:URW Chancery L Medium Italic">Доской букет</tspan></tspan></textPath></text>
+    <g
+       id="g4525"
+       transform="translate(110,18)">
+      <g
+         transform="matrix(0.53716172,0.84347929,-0.84347929,0.53716172,437.65654,64.716085)"
+         id="g4434">
+        <image
+           y="579.80798"
+           x="136.70058"
+           id="image4208"
+           xlink:href="petal.png"
+           height="28.715239"
+           width="93.455048"
+           transform="matrix(0.99999169,-0.00407657,0.00407657,0.99999169,0,0)" />
+        <flowRoot
+           xml:space="preserve"
+           id="flowRoot4210"
+           style="font-size:18px;font-style:italic;font-variant:normal;font-weight:500;font-stretch:normal;text-align:start;line-height:125%;letter-spacing:1.85000002px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;fill:#80c087;fill-opacity:1;stroke:none;filter:url(#filter4183);font-family:URW Chancery L;-inkscape-font-specification:URW Chancery L Medium Italic"
+           transform="translate(-79.39304,382.42365)"><flowRegion
+             id="flowRegion4212"><rect
+               id="rect4214"
+               width="74.131073"
+               height="28.539883"
+               x="255.06352"
+               y="198.46436"
+               style="font-size:18px;font-style:italic;font-variant:normal;font-weight:500;font-stretch:normal;text-align:start;line-height:125%;letter-spacing:1.85000002px;writing-mode:lr-tb;text-anchor:start;fill:#80c087;fill-opacity:1;font-family:URW Chancery L;-inkscape-font-specification:URW Chancery L Medium Italic" /></flowRegion><flowPara
+             id="flowPara4216">Форум</flowPara></flowRoot>      </g>
+      <g
+         transform="translate(4,-8)"
+         id="g4422">
+        <image
+           transform="matrix(0.799416,0.60077788,-0.60077788,0.799416,0,0)"
+           width="93.455048"
+           height="28.715239"
+           xlink:href="petal.png"
+           id="image4244"
+           x="313.60376"
+           y="383.80038" />
+        <flowRoot
+           transform="matrix(0.82706429,0.56210733,-0.56210733,0.82706429,-56.758568,208.38618)"
+           style="font-size:18px;font-style:italic;font-variant:normal;font-weight:500;font-stretch:normal;text-align:start;line-height:125%;letter-spacing:1.85000002px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;fill:#80c087;fill-opacity:1;stroke:none;filter:url(#filter4183);font-family:URW Chancery L;-inkscape-font-specification:URW Chancery L Medium Italic"
+           id="flowRoot4246"
+           xml:space="preserve"><flowRegion
+             id="flowRegion4248"><rect
+               style="font-size:18px;font-style:italic;font-variant:normal;font-weight:500;font-stretch:normal;text-align:start;line-height:125%;letter-spacing:1.85000002px;writing-mode:lr-tb;text-anchor:start;fill:#80c087;fill-opacity:1;font-family:URW Chancery L;-inkscape-font-specification:URW Chancery L Medium Italic"
+               y="198.46436"
+               x="255.06352"
+               height="28.539883"
+               width="74.131073"
+               id="rect4250" /></flowRegion><flowPara
+             id="flowPara4252">Товары</flowPara></flowRoot>      </g>
+      <g
+         transform="matrix(0.94421863,-0.32931925,0.32931925,0.94421863,-357.55149,-38.089112)"
+         id="g4458">
+        <image
+           transform="matrix(0.99999169,-0.00407657,0.00407657,0.99999169,0,0)"
+           width="93.455048"
+           height="28.715239"
+           xlink:href="petal.png"
+           id="image4443"
+           x="184.61049"
+           y="602.00348" />
+        <flowRoot
+           transform="matrix(0.99670077,-0.08116391,0.08116391,0.99670077,-42.667042,426.60999)"
+           style="font-size:18px;font-style:italic;font-variant:normal;font-weight:500;font-stretch:normal;text-align:start;line-height:125%;letter-spacing:1.85000002px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;fill:#80c087;fill-opacity:1;stroke:none;filter:url(#filter4183);font-family:URW Chancery L;-inkscape-font-specification:URW Chancery L Medium Italic"
+           id="flowRoot4445"
+           xml:space="preserve"
+           inkscape:transform-center-x="2.3763733"
+           inkscape:transform-center-y="-3.873907"><flowRegion
+             id="flowRegion4447"><rect
+               style="font-size:18px;font-style:italic;font-variant:normal;font-weight:500;font-stretch:normal;text-align:start;line-height:125%;letter-spacing:1.85000002px;writing-mode:lr-tb;text-anchor:start;fill:#80c087;fill-opacity:1;font-family:URW Chancery L;-inkscape-font-specification:URW Chancery L Medium Italic"
+               y="198.46436"
+               x="255.06352"
+               height="28.539883"
+               width="74.131073"
+               id="rect4449" /></flowRegion><flowPara
+             id="flowPara4451">О нас</flowPara></flowRoot>      </g>
+      <g
+         transform="translate(2,-4)"
+         id="g4408">
+        <image
+           transform="matrix(0.9460054,0.32415086,-0.32415086,0.9460054,0,0)"
+           width="93.455048"
+           height="28.715239"
+           xlink:href="petal.png"
+           id="image4196"
+           x="178.73032"
+           y="449.84872" />
+        <flowRoot
+           transform="matrix(0.9546025,0.29788263,-0.29788263,0.9546025,-137.84576,228.41691)"
+           style="font-size:18px;font-style:italic;font-variant:normal;font-weight:500;font-stretch:normal;text-align:start;line-height:125%;letter-spacing:1.85000002px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;fill:#80c087;fill-opacity:1;stroke:none;filter:url(#filter4183);font-family:URW Chancery L;-inkscape-font-specification:URW Chancery L Medium Italic"
+           id="flowRoot4198"
+           xml:space="preserve"><flowRegion
+             id="flowRegion4200"><rect
+               style="font-size:18px;font-style:italic;font-variant:normal;font-weight:500;font-stretch:normal;text-align:start;line-height:125%;letter-spacing:1.85000002px;writing-mode:lr-tb;text-anchor:start;fill:#80c087;fill-opacity:1;font-family:URW Chancery L;-inkscape-font-specification:URW Chancery L Medium Italic"
+               y="198.46436"
+               x="255.06352"
+               height="28.539883"
+               width="74.131073"
+               id="rect4202" /></flowRegion><flowPara
+             id="flowPara4204">Букеты</flowPara></flowRoot>      </g>
+      <g
+         transform="matrix(0.9993997,-0.03464444,0.03464444,0.9993997,-16.767497,2.6566867)"
+         id="g4415">
+        <image
+           y="469.87564"
+           x="27.91231"
+           id="image4096"
+           xlink:href="petal.png"
+           height="28.715239"
+           width="93.455048"
+           transform="matrix(0.99991386,0.01312549,-0.01312549,0.99991386,0,0)" />
+        <flowRoot
+           xml:space="preserve"
+           id="flowRoot4143"
+           style="font-size:18px;font-style:italic;font-variant:normal;font-weight:500;font-stretch:normal;text-align:start;line-height:125%;letter-spacing:1.85000002px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;fill:#80c087;fill-opacity:1;stroke:none;filter:url(#filter4183);font-family:URW Chancery L;-inkscape-font-specification:URW Chancery L Medium Italic"
+           transform="matrix(0.99980843,-0.01957277,0.01957277,0.99980843,-220.22917,279.64674)"><flowRegion
+             id="flowRegion4145"><rect
+               id="rect4147"
+               width="74.131073"
+               height="28.539883"
+               x="255.06352"
+               y="198.46436"
+               style="font-size:18px;font-style:italic;font-variant:normal;font-weight:500;font-stretch:normal;text-align:start;line-height:125%;letter-spacing:1.85000002px;writing-mode:lr-tb;text-anchor:start;fill:#80c087;fill-opacity:1;font-family:URW Chancery L;-inkscape-font-specification:URW Chancery L Medium Italic" /></flowRegion><flowPara
+             id="flowPara4149">Главная</flowPara></flowRoot>      </g>
+    </g>
+    <g
+       id="g4518"
+       transform="translate(591,-67.285714)">
+      <image
+         y="600.23547"
+         x="-249.08336"
+         id="image4479"
+         xlink:href="petal.png"
+         height="28.715239"
+         width="93.455048"
+         transform="matrix(-0.99999169,-0.00407657,-0.00407657,0.99999169,0,0)" />
+      <flowRoot
+         xml:space="preserve"
+         id="flowRoot4481"
+         style="font-size:13px;font-style:italic;font-variant:normal;font-weight:500;font-stretch:normal;text-align:start;line-height:125%;letter-spacing:1.85000002px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;fill:#80c087;fill-opacity:1;stroke:none;filter:url(#filter4183);font-family:URW Chancery L;-inkscape-font-specification:URW Chancery L Medium Italic"
+         transform="translate(-96.964469,406.63775)"><flowRegion
+           id="flowRegion4483"><rect
+             id="rect4485"
+             width="103.41677"
+             height="28.89703"
+             x="255.06352"
+             y="198.46436"
+             style="font-size:13px;font-style:italic;font-variant:normal;font-weight:500;font-stretch:normal;text-align:start;line-height:125%;letter-spacing:1.85000002px;writing-mode:lr-tb;text-anchor:start;fill:#80c087;fill-opacity:1;font-family:URW Chancery L;-inkscape-font-specification:URW Chancery L Medium Italic" /></flowRegion><flowPara
+           id="flowPara4487">Регистрация</flowPara></flowRoot>    </g>
+    <g
+       id="g4506"
+       transform="translate(559.23037,-133.34106)">
+      <image
+         transform="matrix(-0.99999169,-0.00407657,-0.00407657,0.99999169,0,0)"
+         width="93.455048"
+         height="28.715239"
+         xlink:href="petal.png"
+         id="image4491"
+         x="-359.08246"
+         y="599.78705" />
+      <flowRoot
+         transform="translate(34.60696,403.42346)"
+         style="font-size:18px;font-style:italic;font-variant:normal;font-weight:500;font-stretch:normal;text-align:start;line-height:125%;letter-spacing:1.85000002px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;fill:#80c087;fill-opacity:1;stroke:none;filter:url(#filter4183);font-family:URW Chancery L;-inkscape-font-specification:URW Chancery L Medium Italic"
+         id="flowRoot4493"
+         xml:space="preserve"><flowRegion
+           id="flowRegion4495"><rect
+             style="font-size:18px;font-style:italic;font-variant:normal;font-weight:500;font-stretch:normal;text-align:start;line-height:125%;letter-spacing:1.85000002px;writing-mode:lr-tb;text-anchor:start;fill:#80c087;fill-opacity:1;font-family:URW Chancery L;-inkscape-font-specification:URW Chancery L Medium Italic"
+             y="198.46436"
+             x="255.06352"
+             height="28.539883"
+             width="74.131073"
+             id="rect4497" /></flowRegion><flowPara
+           id="flowPara4499">Вход</flowPara></flowRoot>    </g>
+  </g>
+</svg>

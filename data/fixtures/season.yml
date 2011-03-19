@@ -1,0 +1,13 @@
+Season:
+  winter:
+    name: Зима
+    sorder: 1
+  spring:
+    name: Весна
+    sorder: 2
+  summer:
+    name: Лето
+    sorder: 3
+  autumn:
+    name: Осень
+    sorder: 4

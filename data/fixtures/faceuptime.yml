@@ -1,0 +1,8 @@
+FaceUptime:
+  hour_uptime:
+    name: час
+  day_uptime:
+    name: день
+  month_uptime:
+    name: месяц
+

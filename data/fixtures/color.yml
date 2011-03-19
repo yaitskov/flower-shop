@@ -1,0 +1,23 @@
+Color:
+  yellow:
+    name: Желтый
+    rgbvalue: yellow
+  green:
+    name: Зеленый
+    rgbvalue: green
+  pink:
+    name: Розовый
+    rgbvalue: pink
+  purple:
+    name: Фиолетовый
+  black:
+    name: Черный
+    rgbvalue: black
+  white:
+    name: Белый
+    rgbvalue: white
+  red:
+    name: Красный
+    rgbvalue: red
+    
+      

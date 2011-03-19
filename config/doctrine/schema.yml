@@ -11,20 +11,24 @@
 Photo:
   columns:
     # кол-во ссылок на сущность
-    numlinks: { type: integer, notnul: true, default: 0 }
+    numlinks: { type: integer, notnull: true, default: 0, range: [0,1000000] }
     # путь к файлу
     path: { type: string(255), notnull: true }
     # формат файла ( расширение )
-    extetion: { type: string(10), notnull: true }
+    extention: { type: string(10), notnull: true }
     # размеры в пикселях
     width: { type: integer }
     height: { type: integer }
-
+#    publisher_id: { type: integer, notnull: true }
+#  relations:
+#    Photo: { local: publisher_id, foreign: id }
 
 AlbumElement:
   columns:
+    photo_id: { type: integer, notnull: true }
+    album_id: { type: integer, notnull: true }
     # порядок фотографий в альбоме
-    order: { type: integer, notnull: true }
+    itmorder: { type: integer, notnull: true }
   relations:
     Photo: { onDelete: CASCADE, local: photo_id, foreign: id }
     PhotoAlbum: { onDelete: CASCADE, local: album_id, foreign: id }
@@ -35,16 +39,16 @@ PhotoAlbum:
 
 # о самом веб сайте ( сущность в единственном экземпляре )  
 WebSite:
-  # кол-во посещений сайта за сутки
-  visitors_a_day: { type: integer, notnull: true, default: 0 }
-  # кол-во посещений сайта за час
-  visitors_a_hour: { type: integer, notnull: true, default: 0 }
-  # 
-  support_email: { type: string(100) }
-  # год основания сайта / магазина
-  birth_year: { type: integer }
-  # о веб сайте
-  about: { type: string(4000) }
+  columns:
+    # кол-во посещений сайта за час
+    visitors_a_hour: { type: integer, notnull: true, default: 0 }
+    # кол-во посещений сайта за сутки
+    visitors_a_day: { type: integer, notnull: true, default: 0 }
+    support_email: { type: string(100) }
+    # год основания сайта / магазина
+    birth_year: { type: integer }
+    # о веб сайте
+    about: { type: string(4000) }
 
 # статистика за сутки по часам  
 DayStatistic:
@@ -95,19 +99,20 @@ FlowerShop:
     # координаты магазина для яднекс карты
     # точка на карте описывается двумя вещественными числами
     # центр карты левее центра чуть
-    map_x: { type: float }
-    map_y: { type: float }
+    map_x: { type: decimal, scale: 6, size: 6  }
+    map_y: { type: decimal, scale: 6, size: 6 }
     # центр объекта 39.786857, 47.267104
-    place_x: { type: float }
-    place_y: { type: float }
+    place_x: { type: decimal, scale: 6, size: 6 }
+    place_y: { type: decimal, scale: 6, size: 6 }
     # масштаб карты от 0 до 17
     map_scale: { type: integer, notnull: true, default: 13, range: [0,17] }
     # размеры окна в пикселях
     map_width: { type: integer, notnull: true, default: 600, range: [100,10000] }
     map_heigth: { type: integer, notnull: true, default: 400, range: [100,10000] }
+    views: { type: integer, notnull: true }
   relations:
     # виды магазина с улициы
-    PhotoAlbum: { onDelete: RESTRICT, local: view, foreign: id }
+    PhotoAlbum: { onDelete: RESTRICT, local: views, foreign: id }
 
     
 # пользователь сайта может блогером, работником, администратором и клиентом
@@ -135,7 +140,7 @@ SiteUser:
     # может делать авторизованные заказы ( клиент )
     is_client: { type: boolean, notnull: true, default: false }
     # скидка клиенту
-    discount: { type: float, notnull: true, default: 0.0 }
+    discount: { type: float, scale: 6, notnull: true, default: 0.0 }
     # хэш пароля
     password: { type: string(255), notnull: true }
     # администратор - самые широкие полномочия
@@ -147,6 +152,7 @@ SiteUser:
     
     # дата последнего посещения сайта ( последня активность ) 
     last_login_at: { type: timestamp, notnull: true }
+    face_id: { type: integer }
   relations:    
     # ссылка на фотографию
     Photo: { onDelete: SET NULL, local: face_id, foreign: id }
@@ -178,7 +184,10 @@ Posy:
     # переменная состовляющая для каждого компонента своя
     # путь к изображению иконки для букета
     icon: { type: string(255) }    
-    
+    publisher_id: { type: integer, notnull: true }
+    author_id: { type: integer, notnull: true }    
+    album_id: { type: integer, notnull: true }
+
   relations:
     # автор материала тот кто его выложил на сайт 
     SiteUser: { onDelete: CASCADE, local: publisher_id, foreign: id }
@@ -195,45 +204,74 @@ PosyView:
     name: { type: string(100), notnull: true, unique: true }
     description: { type: string(3000) }
     # порядок группы в списке видов букетов
-    order: { type: integer, notnull: true }
+    grporder: { type: integer, notnull: true }
 
-# таблица связка    
+# таблица связка нужна потому что один и тот же букет
+# може быть в разных категориях
 PosyViewList:
   columns:
     # порядок букетов в группе
-    order: { type: integer, notnull: true }
+    itmorder: { type: integer, notnull: true }
+    posy_id: { type: integer, notnull: true }
+    posyview_id:  { type: integer, notnull: true }
   relations:
     Posy: { onDelete: CASCADE, local: posy_id, foreign: id }
     PosyView: { onDelete: CASCADE, local: posyview_id, foreign: id }
 
+Measure:
+  columns:
+    name: { type: string(10), notnull: true, unique: true }
+    logname: { type: string(255), notnull: true }
+    
 # категораия товара ( искуственные цветы, открытки, горшки, почва, удобрения )
-
 ProductCategory:
   actAs: { Timestampable: ~ }
   columns:
+    is_flower: { type: boolean, notnull: true, default: false }
     name: { type: string(100), notnull: true, unique: true }
     description: { type: string(3000) }
-    order: { type: integer, notnull: true, uniqure: true, range: [0,1000000] }
-    created_at { type: timestamp, notnull: true }
+    catorder: { type: integer, notnull: true, unique: true, range: [0,1000000] }
+    created_at: { type: timestamp, notnull: true }
     # единица измерения 
-    measure_unit: { type: enum, values: [ "шт.", "м", "л", "кг" ], default: 'шт.' }
+    measure_id: { type: integer }
+    # иконка категории товаров
+    icon_id: { type: integer }
+    publisher_id: { type: integer, notnull: true }
   relations:
+    Measure: { onDelete: CASCADE, local: measure_id, foreign: id }
     Photo: { onDelete: SET NULL, local: icon_id, foreign: id }
+    SiteUser: { local: publisher_id, foreign: id }
 # отношение цвет
 
 Color:
   columns:
     name: { type: string(255), notnull: true, unique: true }
     # значение цвета в rgb
-    rgbvalue: { type: { string(6), notnull, true }
+    rgbvalue: { type: string(6), notnull: true }
 
 ColorList:
 
 # набор цветов    
 ColorListElement:
+  columns:
+    color_id: { type: integer, notnull: true }
+    list_id: { type: integer, notnull: true }
   relations:
     Color: { onDelete: CASCADE, local: color_id, foreign: id }
     ColorList: { onDelete: CASCADE, local: list_id, foreign: id }
+
+# чуствительность к солнцу    
+SunSense:
+  columns:
+    name: { type: string(10), notnull: true, unique: true }
+#     
+Blossoming:
+  columns:
+    name: { type: string(10), notnull: true, unique: true }
+    
+Sex:
+  columns:
+    name: { type: string(10), notnull: true, unique: true }
     
 #  товар
 Product:
@@ -248,7 +286,7 @@ Product:
     # кол-во товара
     amount: { type: integer, notnull: true, default: 0, range: [0,1000000] }
     # цена за ед. если null значит не извесна
-    price: { type: integer }
+    price: { type: float }
     # дата последнего поступления
     last_entrance: { type: timestamp, notnull: true }
     # здесь могу быть комнатные растения
@@ -256,11 +294,11 @@ Product:
     # требования к хранению ( дипазон температур, влажности, освещенность )
     temperature_range: { type: string(20), regexp: '/^[0-9]+-[0-9]+$/' }
     # время цветения постоянно, не цветет и диапазон
-    blossoming_type: { type: enum, values[ 'постоянно', 'не цветет', 'переодически' ] }
+    blossoming_id: { type: integer }
     blossoming_start: { type: date }
     blossoming_end: { type: date }
     #  солнце
-    sun: { type: enum, values [ 'тенелюбивое', 'любит солнце', 'не чуствительно' ] }
+    sun: { type: integer } 
     # переодичность полива
     sprinkling_period: { type: string(100) }
     # размеры ( у открыток a4 a5 ... )
@@ -268,7 +306,15 @@ Product:
     # вес
     weight: { type: float } 
     # требования к почве
+    category_id: { type: integer, notnull: true }
+    icon_id: { type: integer }
+    album_id: { type: integer }        
+    color_id: { type: integer }
+    publisher_id: { type: integer, notnull: true }
   relations:
+    SiteUser: { local: publisher_id, foreign: id }    
+    SunSense: { local: sun, foreign: id }
+    Blossoming: { local: blossoming_id, foreign: id }
     ProductCategory: { onDelete: CASCADE, local: category_id, foreign: id }
     PhotoAlbum: { onDelete: CASCADE, local: album_id, foreign: id }
     Photo: { onDelete: CASCADE, local: icon_id, foreign: id }
@@ -279,16 +325,22 @@ Season:
   columns:
     name: { type: string(40), notnull: true, unique: true }
     # отношение порядка зима, весна, лето, осень
-    order: { type: integer, notnull: true, unique: true }
+    sorder: { type: integer, notnull: true, unique: true }
+
+FaceUptime:
+  columns:
+    name: { type: string(10), notnull: true, unique: true }
     
 # отношение    
 # отношение цветы ( для букетов )
 Flower:
   actAs: { Timestampable: ~ }
   columns:
-    name: { type: string(100), notnull: true, unique: true }
+    # полей название не допустимо
+    # происхождение ( голанская / месная )
+    comment: { type: string(100) }
     # как ухаживать ( с какими цветами не переносимость )    
-    description: { type: string(4000) }
+    howcare: { type: string(4000) }
     created_at: { type: timestamp, notnull: true }
     # время последнего поступления
     updated_at: { type: timestamp, notnull: true }
@@ -299,19 +351,29 @@ Flower:
     # коэф-ет сложности за работу 
     work_factor: { type: float, notnull: true, default: 1.0 }    
     # кому дариться м/ж/ всем
-    sex: { type: enum, values: [ 'м', 'ж', 'всем' ], default: 'всем', notnull: true }
+    sex: { type: integer } 
     # возрастная категория
     start_age: { type: integer }
     end_age: { type: integer }
     # кол-во штук
-    amount: { type: integer, notnull: true, minValue: 0 }
+    amount: { type: integer, notnull: true, default: 0 }
     # температурный диапазон ( градусы )
     lowest_temperature: { type: integer }
     highest_temperature: { type: integer }
     # среднее время товарного вида цветка
-    uptime_measure: { type: enum, values: [ 'час', 'день', 'месяц' ] }
+    uptime_measure: { type: integer } 
     uptime: { type: integer }
+    season_start: { type: integer }
+    season_end: { type: integer }
+    album_id: { type: integer }
+    icon_id: { type: integer }
+    publisher_id: { type: integer, notnull: true }
+    color_id: { type: integer }
+    category_id: { type: integer, notnull: true }
   relations:
+    FaceUptime: { local: uptime_measure, foreign: id }
+    ProductCategory: { local: category_id, foreign: id }
+    Sex: { local: sex, foreign: id }
     # сезон цветения / когда есть в продаже
     Season: { onDelete: CASCADE, local: season_start, foreign: id }    
     Season: { onDelete: CASCADE, local: season_end, foreign: id }    
@@ -325,6 +387,8 @@ FlowerPosy:
   columns:
     # кол-во цветка в букете
     amount: { type: integer }
+    flower_id: { type: integer, notnull: true }
+    posy_id: { type: integer, notnull: true }    
   relations:
     Flower: { onDelete: CASCADE, local: flower_id, foreign: id }
     Posy: { onDelete: CASCADE, local: posy_id, foreign: id }
@@ -334,10 +398,13 @@ UsedProducts:
   columns:
     # кол-во на один букет
     amount: { type: integer }
+    product_id: { type: integer }
+    posy_id: { type: integer }
   relations:
     Product: { onDelete: CASCADE, local: product_id, foreign: id }
     Posy: { onDelete: CASCADE, local: posy_id, foreign: id }
 
+    
 # заказы клиентов
 Orders:
   actAs: { Timestampable: ~ }
@@ -365,9 +432,12 @@ Orders:
     #
     client_email: { type: string(100) }
     # сумма заказа без учета скидок в рублях
-    order_amount: { type: float, notnull: true, minValue: 1 }
+    order_amount: { type: float, notnull: true }
+    client_id: { type: integer }
+    responsible_id: { type: integer }
+    posy_id: { type: integer, notnull: true }
   relations:
-    # если рарегистрированный клиент
+    # если зарегистрированный клиент
     SiteUser: { onDelete: CASCADE, local: client_id, foreign: id }
     # ответственный за выполение заказа тот кто его принял и начал вязать букет
     SiteUser: { onDelete: CASCADE, local: responsible_id, foreign: id }
@@ -386,6 +456,7 @@ ForumTheme:
     pinned_order: { type: integer }
     # тема заморожена и в нее нельзя добавлять сообщения всем кроме администраторов
     freezed: { type: boolean, notnull: true, default: false }
+    author_id: { type: integer, notnull: true }
   relations:
     SiteUser: { onDelete: CASCADE, local: author_id, foreign: id }
 
@@ -394,6 +465,7 @@ ForumPost:
   columns:
     body: { type: string(8000), notnull: true }
     created_at: { type: timestamp, notnull: true }
+    author_id: { type: integer, notnull: true }    
   relations:
     SiteUser: { onDelete: CASCADE, local: author_id, foreign: id }
     

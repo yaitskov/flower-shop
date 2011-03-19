@@ -1,0 +1,7 @@
+SunSense:
+  heliophile:
+    name: любит солнце
+  shade_requiring:
+    name: тенелюбивое
+  sununsense:
+    name: не чуствительно

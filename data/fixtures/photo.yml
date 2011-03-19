@@ -1,0 +1,14 @@
+Photo:
+  dans_face:
+    numlinks: 1
+    path: dans_face
+    extention: jpg
+  brees_face:
+    numlinks: 1
+    path: brees_face
+    extention: jpg
+  aunts_face:
+    numlinks: 1
+    path: aunts_face
+    extention: jpg
+    

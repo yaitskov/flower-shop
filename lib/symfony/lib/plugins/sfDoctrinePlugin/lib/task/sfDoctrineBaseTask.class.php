@@ -179,7 +179,12 @@ abstract class sfDoctrineBaseTask extends sfBaseTask
         $definition = $this->canonicalizeModelDefinition($model, $definition);
 
         // merge in the globals
-        $definition = array_merge($globals, $definition);
+        if ( ! is_array( $definition ) ){
+          //var_dump( $definition );
+          //var_dump( $globals  ); 
+          $definition = $globals;
+        }else
+          $definition = array_merge($globals, $definition);
 
         // merge this model into the schema
         $models[$model] = isset($models[$model]) ? sfToolkit::arrayDeepMerge($models[$model], $definition) : $definition;

@@ -82,5 +82,8 @@ return array(
 	'params'=>array(
 		// this is used in contact page
 		'adminEmail'=>'webmaster@example.com',
+                // путь к каналогу где хранятся фотки
+                'photoesPath'=>dirname(__FILE__).DIRECTORY_SEPARATOR.'..'
+                .DIRECTORY_SEPARATOR.'..'.DIRECTORY_SEPARATOR.'photoes',
 	),
 );

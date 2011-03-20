@@ -1071,9 +1071,9 @@ EOD;
 			if(isset($url[0]))
 			{
 				if(($c=Yii::app()->getController())!==null)
-					$url=$c->createUrl($url[0],array_splice($url,1));
+					$url=$c->createAbsoluteUrl($url[0],array_splice($url,1));
 				else
-					$url=Yii::app()->createUrl($url[0],array_splice($url,1));
+					$url=Yii::app()->createAbsoluteUrl($url[0],array_splice($url,1));
 			}
 			else
 				$url='';

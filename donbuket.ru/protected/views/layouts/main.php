@@ -52,7 +52,7 @@
             href="registration" title="Регистрация"/>      
     </map>
 
-    
+    <?php echo Yii::app()->controller->getId() . "/" . Yii::app()->controller->getAction()->getId() ?>
     <div class="container" id="header">
       <div class="menu">
           <img usemap="#main_menu_map" border="0" src="/images/aboutus.png"/>

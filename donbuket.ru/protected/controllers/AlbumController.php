@@ -121,16 +121,26 @@ class AlbumController extends Controller
 		else
 			throw new CHttpException(400,'Invalid request. Please do not repeat this request again.');
 	}
-        public function actionPhoto($id){
+        public function actionPhoto($id, $rsize=null){
           $model = $this->loadModel ( $id );
+          //          file_put_contents( "images/xxx.png", $model->photo );
+          if ( $rsize !== null ){
+            $image = Yii::app()->image->load( Yii::app()->urlManager->createUrl ( 'album/photo',
+                                                                                  array ( 'id' =>  $id )) );
+            $image->resize( $rsize, $rsize); // ->rotate(-45)->quality(75)->sharpen(20);
+          }
+          
           header('Pragma: public');
           header('Expires: 0');
           header('Cache-Control: must-revalidate, post-check=0, pre-check=0');          
           header('Content-Transfer-Encoding: binary');
-          header('Content-length: '.$model->file_size);
+          //header('Content-length: '.$model->file_size);
           header('Content-type: ' . $model->file_type);
-          header('Content-Disposition: attachment; filename='.$model->filename);
-          echo $model->photo;
+          //          header('Content-Disposition: attachment; filename=main.png'.$model->filename);
+          if ( $rsizie !== null )
+            $image->render();
+          else
+            echo $model->photo;
           exit();
 
           $this->render('photo',array(

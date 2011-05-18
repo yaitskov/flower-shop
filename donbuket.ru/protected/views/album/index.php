@@ -7,7 +7,11 @@ $this->menu=array(
 	array('label'=>'Create Album', 'url'=>array('create')),
 	array('label'=>'Manage Album', 'url'=>array('admin')),
 );
+
 ?>
+              
+
+
 
 <h1>Albums</h1>
 

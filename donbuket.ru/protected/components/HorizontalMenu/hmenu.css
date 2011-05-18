@@ -1,0 +1,63 @@
+.horizontal-menu {
+    padding: 0px;
+    margin: 0px;
+    list-style-type:none;
+    text-align: right;
+}
+.horizontal-menu ul {
+    padding:0px;
+    margin: 0px 0px 0px 0px;
+}
+.horizontal-menu ul a {
+    margin: 0px 0px 0px 4px;
+    background: none;
+    border: 1px solid #80c087;
+    text-decoration:none;
+    list-style-type:none;
+}
+.horizontal-menu ul a:hover{
+    background-color: #80c087;
+    color: #fff;
+}
+.horizontal-menu ul li {
+    float: right;
+    text-decoration:none;
+    list-style-type:none;
+}
+.horizontal-menu ul li a {
+    float: none;
+    text-decoration:none;
+    list-style-type:none;
+    padding: 5px;
+}
+.horizontal-menu ul ul li {
+    float: none;
+    width: 150px;
+}
+.horizontal-menu ul ul li:first-child a {
+    border: 1px solid #80c087;
+/*    border-bottom: 0px solid #80c087;    */
+}
+.horizontal-menu ul ul li a {
+    background-color: #fff5f3;
+    border: 1px solid #80c087;
+    border-top: 0px solid #80c087;
+    width: 150px;
+}
+
+.horizontal-menu ul ul li:hover {
+    background-color: #80c087;
+    color: #fff;
+}
+div.horizontal-menu a {
+    display: block;
+}
+div.horizontal-menu li ul {
+    display: none;
+    position: absolute;
+    margin: 0px 0px 0px 0px;
+}
+div.horizontal-menu li:hover ul {
+    display: block;
+    z-index: 10;
+}

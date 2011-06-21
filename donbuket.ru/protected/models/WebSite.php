@@ -14,6 +14,8 @@
    * @property string $meta_author
    * @property string $name
    * @property string $about
+   * @property integer $map_width
+   * @property integer $map_height      
    */
 class WebSite extends CActiveRecord
 {
@@ -26,14 +28,19 @@ class WebSite extends CActiveRecord
     return parent::model($className);
   }
 
-  public function canUpdate ( WebUser $user ){
+  public function canUpdate (WebUser $user) {
+    return  $user->isRoot;
   }
   /**
    * @return string the associated database table name
    */
-  public function tableName()
-  {
+  public function tableName() {
     return 'web_site';
+  }
+  public function deleteTrashFiles($attribute,$params) {
+    $trasher = new TrashFiles( DescriptionFile::model()->with('file')->findAll(),
+                               $this->about );
+    $trasher->run();
   }
 
   /**
@@ -41,18 +48,21 @@ class WebSite extends CActiveRecord
    */
   public function rules()
   {
-    // NOTE: you should only define rules for those attributes that
-    // will receive user inputs.
     return array(
-      array('support_email, name', 'required'),
+      array('support_email, name, birth_year, about, meta_keywords,'
+            . 'meta_description, meta_author', 'required'),
       array('visitors_a_hour, visitors_a_day, birth_year', 'length', 'max'=>20),
+      array('visitors_a_hour, visitors_a_day, ', 'numerical',
+            'integerOnly' => true, 'allowEmpty' => false, 'max' => 1000000,
+            'min' => 0),
+      array('birth_year', 'numerical', 'integerOnly' => true,
+            'allowEmpty' => false, 'min' => 1990, 'max' => 2100),
       array('support_email', 'length', 'max'=>100),
-      array('name', 'length', 'max'=>255),
-      array('meta_keywords, meta_description, meta_author, about', 'safe'),
-      // The following rule is used by search().
-      // Please remove those attributes that should not be searched.
-      array('id, visitors_a_hour, visitors_a_day, support_email, birth_year, meta_keywords,'
-            . 'meta_description, meta_author, name, about', 'safe', 'on'=>'search'),
+      array('name, yandex_map_key', 'length', 'max'=>255),
+      array('meta_keywords, meta_description, meta_author',
+            'length', 'max' => 4000),
+      array('about', 'length', 'max' => 20000),      
+      array('about', 'deleteTrashFiles', 'on' => 'update'),
     );
   }
 
@@ -61,8 +71,6 @@ class WebSite extends CActiveRecord
    */
   public function relations()
   {
-    // NOTE: you may need to adjust the relation name and the related
-    // class name for the relations automatically generated below.
     return array(
     );
   }
@@ -74,42 +82,15 @@ class WebSite extends CActiveRecord
   {
     return array(
       'id' => 'ID',
-      'visitors_a_hour' => 'Visitors A Hour',
-      'visitors_a_day' => 'Visitors A Day',
-      'support_email' => 'Support Email',
-      'birth_year' => 'Birth Year',
-      'meta_keywords' => 'Meta Keywords',
-      'meta_description' => 'Meta Description',
-      'meta_author' => 'Meta Author',
-      'name' => 'Name',
-      'about' => 'About',
+      'visitors_a_hour' => 'Кол-во посещений сайта за час',
+      'visitors_a_day' => 'Кол-во посещений сайта за сутки',
+      'support_email' => 'Адрес электронной почты технической поддержки',
+      'birth_year' => 'Дата основания',
+      'meta_keywords' => 'Ключевые слова характеризующие содержимое сайта',
+      'meta_description' => 'Краткое описание сайта, отображаемое поисковыми машинами',
+      'meta_author' => 'Владелец сайта, также отображается в результатах поисковых машин',
+      'name' => 'Название сайта',
+      'about' => 'О нас',
     );
-  }
-
-  /**
-   * Retrieves a list of models based on the current search/filter conditions.
-   * @return CActiveDataProvider the data provider that can return the models based on the search/filter conditions.
-   */
-  public function search()
-  {
-    // Warning: Please modify the following code to remove attributes that
-    // should not be searched.
-
-    $criteria=new CDbCriteria;
-
-    $criteria->compare('id',$this->id,true);
-    $criteria->compare('visitors_a_hour',$this->visitors_a_hour,true);
-    $criteria->compare('visitors_a_day',$this->visitors_a_day,true);
-    $criteria->compare('support_email',$this->support_email,true);
-    $criteria->compare('birth_year',$this->birth_year,true);
-    $criteria->compare('meta_keywords',$this->meta_keywords,true);
-    $criteria->compare('meta_description',$this->meta_description,true);
-    $criteria->compare('meta_author',$this->meta_author,true);
-    $criteria->compare('name',$this->name,true);
-    $criteria->compare('about',$this->about,true);
-
-    return new CActiveDataProvider(get_class($this), array(
-      'criteria'=>$criteria,
-    ));
   }
 }

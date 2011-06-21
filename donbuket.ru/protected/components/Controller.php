@@ -30,7 +30,13 @@ class Controller extends CController
    * WebSite entity
    */
   protected $__website;
+  public function getNow() {
+    return date( 'Y-m-d H:i:s' );
+  }
+  
   public function getWebsite () {
+    if ($this->__website === null)
+      $this->__website = WebSite::model()->find();
     return $this->__website ;
   }
   /**
@@ -42,7 +48,9 @@ class Controller extends CController
       'accessControl', // perform access control for CRUD operations
     );
   }
-  
+  public function detPageTitle  ( $title ){
+    $this->pageTitle = Yii::app()->name . ' - ' . $title ;
+  }
   /**
    * insert meta tags
    */
@@ -56,5 +64,9 @@ class Controller extends CController
     foreach( $tags as $tag => $val )
       $cs->registerMetaTag ( $val, $tag );    
     return true;
+  }
+  public function saveReturnUrl() {
+    $u = Yii::app()->user;
+    $u->setReturnUrl( $u->currentUrl );
   }
 }

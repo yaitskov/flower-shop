@@ -2,6 +2,20 @@
 
 class SiteController extends Controller
 {
+  public function actionTest() {
+    $t = Yii::app()->filestorage;
+    echo realpath ( $t->pathToStorage ), "<br>";
+    echo realpath ( Yii::app()->basePath ), "<br>";
+    echo getenv("DOCUMENT_ROOT" ), "<br>";            
+    echo  preg_replace (
+      '/^\\//',
+      '',
+      substr ( realpath( $t->pathToStorage ),
+               strlen( realpath( getenv("DOCUMENT_ROOT" ) )
+               )
+      )
+    );
+  }
   /**
    * Declares class-based actions.
    */

@@ -4,7 +4,7 @@
    *  Главное меню сайта где основные разделы букеты, форум, выход и тд
    */
 class SiteHead extends CWidget {
-  public $enterExitCaption, $regIsVisible ;
+  public $enterExitCaption, $regIsVisible, $enterExitHref ;
   // путь к файлу с кнопкой вход/выход
   public $enterExitImage;
   // путь к файлу с кнопкой регистрация
@@ -24,9 +24,10 @@ class SiteHead extends CWidget {
   protected function imageExists ( $img ) {
     return file_exists ( $this->imagePath( $img ) );    
   }
-
-  public function init(){
-    
+  public function getUserName (){
+    return CHtml::encode( Yii::app()->user->name );
+  }
+  public function init(){    
     $this->regIsVisible = Yii::app()->user->isGuest;
     $style = dirname ( __FILE__ ) . DIRECTORY_SEPARATOR
       . 'css' . DIRECTORY_SEPARATOR . 'style.css';
@@ -38,9 +39,11 @@ class SiteHead extends CWidget {
     $this->titleImage = $this->publishImage( 'title.png' );
     if ( Yii::app()->user->isGuest ){
       $this->enterExitCaption = 'Вход';
+      $this->enterExitHref = '/site/login';            
       $this->enterExitImage = $this->publishImage('enter.png');
     }else{
       $this->enterExitCaption = 'Выход';
+      $this->enterExitHref = '/site/logout';
       $this->enterExitImage = $this->publishImage('exit.png');      
     }
     // reg кнопка имеет 3 состояния
@@ -52,8 +55,10 @@ class SiteHead extends CWidget {
     }else {
       $this->regImage = $this->publishImage( 'noregistration.png' );
     }
-    // текущий пункт меню зависит от текущего контролера
-    $img = Yii::app()->controller->getId() . '.png' ;
+    // current menu item is depended from current action
+    $a = Yii::app()->controller->action->getId();
+    if ( $a === 'index' ) $a = "main" ;
+    $img = $a . '.png' ;
     if ( $this->imageExists ( $img ) )
       $this->curItemImage = $this->publishImage( $img );
     else

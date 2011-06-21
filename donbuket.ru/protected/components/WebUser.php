@@ -25,7 +25,7 @@ class WebUser extends CWebUser {
     return $this->isRoot;
   }
   public function getIsRoot () {
-    return $this->_user_model && $this->_user_model->isRoot;
+    return $this->userModel && $this->userModel->is_root;
   }
   public function getCanArticle () {
     return $this->_user_model && $this->_user_model->can_write_articles ;    

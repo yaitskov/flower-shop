@@ -349,6 +349,7 @@ abstract class CActiveRecord extends CModel
 			return self::$_models[$className];
 		else
 		{
+                  //                  if ( $className == 'CActiveRecord' ) throw new Exception('DDDDDDDD');
 			$model=self::$_models[$className]=new $className(null);
 			$model->_md=new CActiveRecordMetaData($model);
 			$model->attachBehaviors($model->behaviors());

@@ -5,33 +5,18 @@
     <meta name="language" content="ru" />
     <!-- blueprint CSS framework -->
     <link rel="stylesheet" type="text/css"
-          href="<?php echo Yii::app()->request->baseUrl; ?>/css/screen.css"
+          href="<?php echo Yii::app()->request->baseUrl; ?>/css/site.css"
           media="screen, projection" />
-    <link rel="stylesheet" type="text/css"
-          href="<?php echo Yii::app()->request->baseUrl; ?>/css/print.css"
-          media="print" />
-    <!--[if lt IE 8]>
-    <link rel="stylesheet" type="text/css"
-          href="<?php echo Yii::app()->request->baseUrl; ?>/css/ie.css" media="screen, projection" />
-    <![endif]-->
-
-    <link rel="stylesheet"
-          type="text/css"
-          href="<?php echo Yii::app()->request->baseUrl; ?>/css/main.css" />
-    <link rel="stylesheet"
-          type="text/css"
-          href="<?php echo Yii::app()->request->baseUrl; ?>/css/form.css" />
     <title><?php echo CHtml::encode($this->pageTitle); ?></title>
   </head>
-  <body>
+  <body class="nospaces">
     <?php Yii::app()->controller->widget('SiteHead'); ?>
     <?php $this->widget( 'zii.widgets.CBreadcrumbs',
                          array( 'links'=>$this->breadcrumbs )); 
-
           echo $content; ?>
 
-    <div id="footer">
-      <div>
+    <div class="footer-of-site-page rounded-corners">
+      <div align="center">
         &copy; 
         <?= Yii::app()->controller->website->birth_year?>
         &mdash;
@@ -39,7 +24,7 @@
         «<?= CHtml::link( Yii::app()->controller->website->name,
                           Yii::app()->createAbsoluteUrl( 'main/index' ) )?>»
       </div>
-      <div>
+      <div align="center">
         <?php echo Yii::powered(); ?>
       </div>
     </div>

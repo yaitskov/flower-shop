@@ -12,8 +12,8 @@
  * @property string $email_address
  * @property string $mail_address
  * @property string $outline_route
- * @property string $map_x
- * @property string $map_y
+ * @property string $map_center_x
+ * @property string $map_center_y
  * @property string $place_x
  * @property string $place_y
  * @property string $map_scale
@@ -25,11 +25,25 @@
  */
 class FlowerShop extends CActiveRecord
 {
+  public $pretty_start_work_at;
+  public $pretty_end_work_at;
+  /**
+   * @return boolean
+   */
+  protected function beforeSave() {
+    $addSeconds = function ($time) { return $time . ':00'; };    
+    $this->start_work_at = $addSeconds($this->pretty_start_work_at);
+    $this->end_work_at   = $addSeconds($this->pretty_end_work_at);
+    return true;
+  }
   protected  function afterFind(){
-    //    $this->name = trim( $this->name );
+    $dropSeconds = function ($time) { return preg_replace('/^([0-9]{2}:[0-9]{2}):[0-9]+$/', '\1', $time); };
+    $this->pretty_start_work_at = $dropSeconds($this->start_work_at);
+    $this->pretty_end_work_at   = $dropSeconds($this->end_work_at);    
     parent::afterFind();
   }
   public function canUpdate ( WebUser $user ){
+    return $user->isRoot;
   }
   /**
    * Returns the static model of the specified AR class.
@@ -48,23 +62,38 @@ class FlowerShop extends CActiveRecord
     return 'flower_shop';
   }
 
+  protected function beforeDelete() {
+    // delete description files and route files
+    foreach( $this->routeFile as $rfile)
+      $rfile->delete();
+    return parent::beforeDelete();
+  }
+  public function deleteTrashFiles() {
+    $trasher = new TrashFiles( $this->routeFile,
+                               $this->outline_route );
+    $trasher->run();
+  }
   /**
    * @return array validation rules for model attributes.
    */
   public function rules()
   {
-    // NOTE: you should only define rules for those attributes that
-    // will receive user inputs.
     return array(
       array('name', 'required'),
+      array('phone, name, email_address, pretty_start_work_at, pretty_end_work_at',
+            'filter', 'filter' => 'trim'),      
       array('phone, name', 'length', 'max'=>255),
+      array('phone', 'PhoneValidator'),
       array('email_address', 'length', 'max'=>100),
-      array('map_x, map_y, place_x, place_y', 'length', 'max'=>6),
+      array('email_address', 'email' ),
+      array('map_center_x, map_center_y, place_x, place_y', 'length', 'max'=>9),
       array('map_scale, views', 'length', 'max'=>20),
-      array('start_work_at, end_work_at, mail_address, outline_route', 'safe'),
-      // The following rule is used by search().
-      // Please remove those attributes that should not be searched.
-      array('id, phone, start_work_at, end_work_at, name, email_address, mail_address, outline_route, map_x, map_y, place_x, place_y, map_scale, views', 'safe', 'on'=>'search'),
+      array('start_work_at, end_work_at', 'safe'),
+      array('pretty_start_work_at, pretty_end_work_at',
+            'TimeValidator', 'withoutSeconds' => true,
+            'message' => 'Формат времени часы и минуты' ),
+      array('outline_route', 'length', 'max'=>5000),
+      array('outline_route', 'deleteTrashFiles', 'on' => 'update'),
     );
   }
 
@@ -76,6 +105,7 @@ class FlowerShop extends CActiveRecord
     // belongs_to relation always returns just one entity no array
     return array(
       'gallery' => array( self::BELONGS_TO, 'Album', 'views'),
+      'routeFile' => array( self::HAS_MANY, 'RouteFile', 'shop_id'),
     );
   }
 
@@ -86,49 +116,21 @@ class FlowerShop extends CActiveRecord
   {
     return array(
       'id' => 'ID',
-      'phone' => 'Phone',
-      'start_work_at' => 'Start Work At',
-      'end_work_at' => 'End Work At',
-      'name' => 'Name',
-      'email_address' => 'Email Address',
-      'mail_address' => 'Mail Address',
-      'outline_route' => 'Outline Route',
-      'map_x' => 'Map X',
-      'map_y' => 'Map Y',
-      'place_x' => 'Place X',
-      'place_y' => 'Place Y',
+      'phone' => 'Телефон',
+      'start_work_at' => 'Время открытия',
+      'end_work_at' => 'Закрытие в',
+      'pretty_start_work_at' => 'Время открытия',
+      'pretty_end_work_at' => 'Закрытие в',
+      'name' => 'Название магазина',
+      'email_address' => 'Адрес электронной почты',
+      'mail_address' => 'Почтовый адрес',
+      'outline_route' => 'Как добраться до магазина',
+      'map_center_x' => 'Х координата цетра карты',
+      'map_center_y' => 'Y координата цетра карты',
+      'place_x' => 'X координата магазина на карте',
+      'place_y' => 'Y координата магазина на карте',
       'map_scale' => 'Map Scale',
       'views' => 'Views',
     );
-  }
-  /**
-   * Retrieves a list of models based on the current search/filter conditions.
-   * @return CActiveDataProvider the data provider that can return the models based on the search/filter conditions.
-   */
-  public function search()
-  {
-    // Warning: Please modify the following code to remove attributes that
-    // should not be searched.
-
-    $criteria=new CDbCriteria;
-
-    $criteria->compare('id',$this->id,true);
-    $criteria->compare('phone',$this->phone,true);
-    $criteria->compare('start_work_at',$this->start_work_at,true);
-    $criteria->compare('end_work_at',$this->end_work_at,true);
-    $criteria->compare('name',$this->name,true);
-    $criteria->compare('email_address',$this->email_address,true);
-    $criteria->compare('mail_address',$this->mail_address,true);
-    $criteria->compare('outline_route',$this->outline_route,true);
-    $criteria->compare('map_x',$this->map_x,true);
-    $criteria->compare('map_y',$this->map_y,true);
-    $criteria->compare('place_x',$this->place_x,true);
-    $criteria->compare('place_y',$this->place_y,true);
-    $criteria->compare('map_scale',$this->map_scale,true);
-     $criteria->compare('views',$this->views,true);
-
-    return new CActiveDataProvider(get_class($this), array(
-      'criteria'=>$criteria,
-    ));
   }
 }

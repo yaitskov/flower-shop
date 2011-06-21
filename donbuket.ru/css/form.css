@@ -53,12 +53,12 @@ div.form fieldset
     -moz-border-radius:7px;
 }
 
-div.form label
-{
-	font-weight: bold;
-	font-size: 0.9em;
-	display: block;
-}
+/* div.form label */
+/* { */
+/* 	font-weight: bold; */
+/* 	font-size: 0.9em; */
+/* 	display: block; */
+/* } */
 
 div.form .row
 {
@@ -123,8 +123,9 @@ div.form .errorSummary
 
 div.form .errorMessage
 {
-	color: red;
-	font-size: 0.9em;
+    color: red;
+    font-size: 0.9em;
+    margin-bottom: 10px;
 }
 
 div.form .errorSummary p
@@ -148,6 +149,7 @@ div.wide.form label
 	width: 100px;
 }
 
+
 div.wide.form .row
 {
 	clear: left;
@@ -158,3 +160,40 @@ div.wide.form .buttons, div.wide.form .hint, div.wide.form .errorMessage
 	clear: left;
 	padding-left: 110px;
 }
+
+div.login-form label, div.form label {
+    margin: 0px;    
+    margin-right: 40px;
+    vertical-align: top;
+}
+div.login-form input, div.form input, .roundedc {
+    border: 1px solid #80C087;
+/*    background-color: #EFE;*/
+    background: none;    
+    -moz-border-radius: 10px;
+    -webkit-border-radius: 10px;
+    -khtml-border-radius: 10px;
+    border-radius: 10px;
+    font-family: "Times New Roman";
+}
+div.login-form input[type=button], div.form input[type=button], div.login-form input[type=submit], div.form input[type=submit] {
+    padding: 5px;
+}
+
+:focus {outline:none;}
+::-moz-focus-inner {border:0;}
+
+
+div.login-form input:hover, div.form input:hover {
+    background-color: #80c087;
+    color: #fff;
+}
+
+div.form input[type=text] { padding-left: 5px; }
+div.form table.form { width: 100%; }
+div.form table.form td:first-child { width: 30%; }
+
+div.form table.form td:first-child label { margin-left: 20px; }
+div.form table.form td input[type=text] { margin-right: 20px; }
+
+div.form table.form td input[type=text] { width: 100%; }

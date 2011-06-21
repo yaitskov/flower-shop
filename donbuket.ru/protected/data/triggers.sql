@@ -43,7 +43,6 @@ create trigger album_element_del after delete on album_element
         call dec_photo_counter ( old.photo_id );
        end |
 create trigger album_element_upd after update on album_element
-
        for each row
        begin
         call upd_photo_counter (old.photo_id,new.photo_id);
@@ -139,6 +138,5 @@ create trigger product_category_upd after update on product_category
         call upd_photo_counter (old.icon_id,new.icon_id );
        end |
        
-|
 
 delimiter ;

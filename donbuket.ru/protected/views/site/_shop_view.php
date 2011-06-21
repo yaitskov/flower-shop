@@ -1,5 +1,6 @@
 <div class='page-section-body'>
-  <div class='flower-shop'>
+  <div align='center'>
+  <div style='width: <?= $this->website->map_width; ?>' class='float-left shop-card'>
     <div>
       <div>
         <?= CHtml::encode( $data->mail_address ) ?>
@@ -13,11 +14,13 @@
       </div>
     </div>
     <div>
-       <p><?= CHtml::encode ( $data->outline_route ) ?></p>
+       <?= $data->outline_route ?>
     </div>
+   <div class="stop-float">
+   </div>
   </div>
-  <div align='center'>
-     <?php $this->widget(
+
+   <?php if (false) $this->widget(
              'YandexMap',
              array( 'places' =>
                     array ( array ( 'x' => $data->place_x,
@@ -33,7 +36,8 @@
            ); ?>
   </div>
   <div>
-     <?php $this->widget (
+ <?php if ( $data->gallery  ): ?>
+ <?php $this->widget (
              'SmoothGalleryWidget',
              array ( 'listOfImages' =>
                         $data->gallery->galleryImages (
@@ -41,8 +45,10 @@
                         )
                     )
            ); ?>
+ <?php endif; ?>
   </div>
 </div>
+
 <?php
    $canUpdate = $data->canUpdate ( Yii::app()->user );
    $this->widget(
@@ -51,22 +57,28 @@
        'items'=>array(
          array( 'label'  => 'Править карту',
                 'url'    => array( 'aboutus/update_map',
-                                   'id' => $data->id                          
-                                 ),
+                                   'id' => $data->id ),
                 'visible'=> $canUpdate
          ),
          array( 'label'  => 'Править фотоки',
                 'url'    => array( 'aboutus/update_shop_gallery',
-                                   'id' => $data->id 
-                                 ),
+                                   'id' => $data->id ),
                 'visible'=> $canUpdate
          ),
          array( 'label'  => 'Править остальное',
                 'url'    => array( 'aboutus/update_shop_info',
-                                   'id' => $data->id 
-                                 ),
+                                   'id' => $data->id ),
                 'visible'=> $canUpdate
          ),
+         array( 'label'  => 'Удалить магазин',
+                'url'    => array( 'aboutus/delete_shop',
+                                   'id' => $data->id ),
+                'visible'=> $canUpdate
+         ),         
+         array( 'label'  => 'Добавить магазин',
+                'url'    => array( 'aboutus/add_new_shop' ),
+                'visible'=> $canUpdate
+         ),         
        ),
      )
    );   ?>

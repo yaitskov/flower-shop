@@ -1,0 +1,20 @@
+
+.shop-card > div {
+    width: 42%;
+    padding: 10px;
+    margin-left: 20px;
+}
+
+.shop-card  span {
+    color: red;
+    font-weight: bold;
+}
+.shop-card > div:first-child > div {
+    padding: 3px;
+}
+
+.shop-card > div + div p {
+    text-align: justify;
+    text-indent: 20pt;
+    line-height: 150%;
+}

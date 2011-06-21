@@ -242,38 +242,6 @@ div.search-form
 {
     background: #80CFFF;
 }
-div.flower-shop p {
-    text-indent: 20px;
-}
-div.flower-shop > div {
-    float: left;
-    width: 50%;
-    margin-bottom: 20px;
-}
-div.flower-shop > div + div {
-    margin-top: 10px;
-}
 
-div.flower-shop > div > div {
-    margin: 10px;
-    font-size: 14pt;
-}
-
-div.flower-shop > div > div > span {
-    font-weight: bold;
-    color: #EE3344;
-}
-div.flower-shop {
-    padding-left: 20px;
-    padding-right: 20px;    
-
-}
-
-div.flower-shop + div > div {
-    clear: both;
-    margin: 0px;
-    
-    border: 1px solid #80c087;
-}
 
 

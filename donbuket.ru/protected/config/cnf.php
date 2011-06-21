@@ -8,7 +8,7 @@ return array(
   // preloading 'log' component
   'preload'=>array('log'),
   'language' => 'ru',
-  //'defaultController' => 'main',
+  //  'defaultController' => 'site',
   // autoloading model and component classes
   'import'=> array(
     'application.models.*',
@@ -16,11 +16,12 @@ return array(
     'application.components.*',
     'application.components.SiteHead.*',
     'application.components.HorizontalMenu.*',
-    'application.extensions.editor.*',
+    'application.extensions.ieditor.*',
     'application.extensions.YandexMap.*',
     'application.extensions.menu.*',
     'application.extensions.mbmenu.*',
-    'application.extensions.SmoothGallery.*',    
+    'application.extensions.SmoothGallery.*',
+    'application.extensions.fileStorage.*',
     'application.helpers.*'),
   'modules'=> array(
     'gii'=> array(
@@ -52,6 +53,7 @@ return array(
     'urlManager' => array (
       'urlFormat' => 'path',
       'showScriptName'=>false,
+      //      'baseUrl' => 'donbuket.ru',
     ),
     'db'=> array(
       'connectionString' =>

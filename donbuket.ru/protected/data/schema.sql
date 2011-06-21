@@ -18,7 +18,6 @@ CREATE TABLE album_element (
        PRIMARY KEY(id)
        ) ENGINE = INNODB;
 
-
 CREATE TABLE blossoming (
        id BIGINT AUTO_INCREMENT,
        name VARCHAR(10) character set utf8 collate utf8_unicode_ci  NOT NULL UNIQUE,
@@ -217,15 +216,20 @@ CREATE TABLE orders (
        
 CREATE TABLE photo (
        id BIGINT AUTO_INCREMENT,
-       file_type integer not null default 0 comment 'тип файла 0 - обычный, 1 - фотография, 2 - видо 3 - аудио',
+       file_type integer not null default 0
+                 comment 'тип файла 0 - обычный, 1 - фотография, 2 - видо 3 - аудио',
+       file_length bigint(20) not null
+                comment 'размер файла в байтах',
+       extension varchar(10) not null comment 'расширение файла',
        numlinks BIGINT DEFAULT 0 NOT NULL
                 comment 'кол-во ссылок на сущность',
        hashName VARCHAR(255) character set utf8 collate utf8_unicode_ci  NOT NULL
                 comment 'путь к файлу',
        origName VARCHAR(255) character set utf8 collate utf8_unicode_ci
                  NOT NULL  comment 'исходное имя файла + расширение',
-       width BIGINT comment 'размеры в писелях',
-       height BIGINT comment 'только для фотографий или видео файлов',
+       mime     varchar(64) comment 'the mime type of the file',          
+       width    integer comment 'размеры в писелях',
+       height   integer comment 'только для фотографий или видео файлов',
        duration integer comment 'длинна записи в секундах для аудио и видео файлов',       
        PRIMARY KEY(id))
        ENGINE=INNODB
@@ -412,6 +416,14 @@ CREATE TABLE site_user (
        is_root TINYINT(1) DEFAULT '0' NOT NULL
                comment 'администратор - самые широкие полномочия',
        registered_at DATETIME NOT NULL comment 'дата и время регистрации в системе',
+       online tinyint(1) default '0' not null
+               comment 'пользователь не выполнил явного выхода после входа',
+       auth_attempts integer default 0 not null
+               comment 'кол-во неудачных попыток входа в систему после последнего удачного',
+       active tinyint(1) default '1' not null
+               comment 'пользователь не заблокирован',
+       registered tinyint(1) default '0' not null
+                   comment '1 - пользователь прошел процедуру подтверждения подлинности почтового ящика',
        is_employee TINYINT(1) DEFAULT '0' NOT NULL
                    comment 'работник - может принимать заказы',
        last_login_at DATETIME NOT NULL
@@ -465,7 +477,24 @@ CREATE TABLE web_site (
              
        PRIMARY KEY(id)) ENGINE = INNODB
        comment 'о самом веб сайте ( сущность в единственном экземпляре )';
-       
+
+create table description_file (
+       id bigint auto_increment,
+       -- общее опинсание объект в одном экземпляре
+       photo_id bigint not null comment 'ссылка файл',
+       primary key(id)
+       ) engine=innodb
+         comment 'ссылки на файлы относящиеся к общему описанию сайта' ;
+
+create table route_file (
+       id bigint auto_increment,
+       -- общее опинсание объект в одном экземпляре
+       photo_id bigint not null comment 'ссылка файл',
+       shop_id bigint not null comment 'ссылка на магазин',
+       primary key(id)
+       ) engine=innodb
+         comment 'ссылки на файлы относящиеся к описанию маршрута до магазина' ;
+         
 CREATE TABLE year_statistic (
        id BIGINT AUTO_INCREMENT,
        created_at DATE NOT NULL UNIQUE comment 'день к которому относится запись',
@@ -481,7 +510,12 @@ ALTER TABLE album_element
       ADD CONSTRAINT album_element_photo_id_photo_id
       FOREIGN KEY (photo_id)
       REFERENCES photo(id) ON DELETE CASCADE;
-      
+
+ALTER TABLE description_file
+      ADD CONSTRAINT  description_file_photo_id_photo_id
+      FOREIGN KEY (photo_id)
+      REFERENCES photo(id)  ON DELETE CASCADE;
+
 ALTER TABLE album_element
       ADD CONSTRAINT album_element_album_id_photo_album_id
       FOREIGN KEY (album_id)

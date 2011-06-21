@@ -9,6 +9,7 @@ class HorizontalMenu extends CWidget {
     Yii::app()->clientScript->registerCssFile ( $css );
     echo '<div class="horizontal-menu">';
     $this->widget('zii.widgets.CMenu', array ( 'items' => $this->items ) );
+    echo '<div class="stop-float"></div>';
     echo '</div>';
   }
 }

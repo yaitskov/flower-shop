@@ -1,0 +1,137 @@
+/*  main style file of the site
+*/
+
+
+/* begin of mix classes
+*/
+.stop-float {
+    float: none !important;
+    clear: both !important;
+    padding: 0px !important;
+    margin: 0px !important;
+    width: 0px !important;
+    height: 0px !important;
+}
+.float-left > div {
+    float: left;
+}
+
+.base-border {
+    border: 1px solid #80c087;    
+}
+.nospaces {
+    padding: 0px;
+    border: none;
+    margin: 0px;
+}
+
+/* end of max classes
+*/
+
+body {
+    /* background body is vertial gradient */
+    background-image: url("/images/background.png");
+    background-repeat:repeat-x; 
+    background-color: #fff5f3;
+    
+}
+p, a, div, span {
+    font-size: 12pt;
+    font-family: Times New Roman, serif;    
+    color: #443344;    
+}
+h1, h2, h3, h4, h5, h6, h7 {
+    color: #333333;
+}
+
+/* a text paragraph or logically linked group images and/or text fields
+*/
+.page-section-body {
+    border: 1px solid #80c087;
+    padding: 5px;
+    padding-left: 10px;
+    padding-right: 10px;        
+    margin-top:   5px  ; 
+    margin-bottom: 5px ;
+
+    -moz-border-radius: 10px;
+    -webkit-border-radius: 10px;
+    -khtml-border-radius: 10px;
+    border-radius: 10px;
+}
+
+.rounded-corners {
+    -moz-border-radius: 10px;
+    -webkit-border-radius: 10px;
+    -khtml-border-radius: 10px;
+    border-radius: 10px !important;
+}
+
+.list-view {
+    border: none;
+    padding: 0px;
+    margin-top: -14px;
+    margin-bottom: 5px;
+}
+
+.list-view > .items {
+    border-width: 0px;
+}
+
+
+/* top most h tag 
+*/
+.page-section-header {
+    margin-left: 20px;
+    margin-top: 20px;
+    margin-bottom: 1px;
+}
+
+/*  style of head of site page
+*/
+
+.header-of-site-page {
+    margin-left: auto;
+    margin-right: auto;    
+    width: 864px;    
+}
+.header-of-site-page div {
+    padding: 0px;
+    margin: 0px;
+    float: left;
+}
+
+
+/* style of div which contains all page contents exception footer and
+header */
+
+.page-content {
+    width: 980px;    
+    margin-left: auto;
+    margin-right: auto;    
+}
+
+.footer-of-site-page  {
+    width: 980px;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 60px;
+    padding-top: 5px;
+    border: 1px solid #80c087;
+    border-bottom: 0px solid #80c087;
+    border-right: 0px solid #80c087;
+    border-left: 0px solid #80c087;    
+}
+.footer-of-site-page > div {
+    margin-bottom: 6px;
+}
+
+.breadcrumbs {
+    position: relative;
+    top: -60px;
+    left: 35%;
+}
+
+.breadcrumbs > a, .breadcrumbs > a:hover {
+    color: #80CFFF;
+}

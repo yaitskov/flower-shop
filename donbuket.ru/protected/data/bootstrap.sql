@@ -23,23 +23,23 @@ insert into site_user ( login, email, firstname,
                         lastname, patronymic, personal_phone,
                         employee_phone, is_blogger, password,
                         is_employee, is_client, is_root,
-                        registered_at, last_login_at
+                        registered_at, last_login_at, registered
                       )
        values ( 'toma', 'toma@yandex.ru', 'Тамара',
                 'Глазырина', 'Николаевна', '+7-928-159-00-04',
                 '+7-928-159-00-04', '1',  sha('1'),
                 '1', '0', '0',
-                '2010-11-11 10:11:11', '2011-03-18 20:11:11' ),
+                '2010-11-11 10:11:11', '2011-03-18 20:11:11', '1' ),
               ( 'dan', 'rtfm.rtfm.rtfm@gmail.com', 'Данил',
                 'Яицков', 'Сергеевич', '+7-928-159-00-04',
                 null, '1', sha('1'),
                 '0', '0', '1',
-                '2010-11-11 10:11:11', '2011-03-18 20:11:11' ),
+                '2010-11-11 10:11:11', '2011-03-18 20:11:11', '1' ),
               ( 'bree', 'eerda@inbox.ru', 'Ирина',
                 'Балабай', 'Викторовна', '+7-928-159-00-04',
                 null, '1', sha('1'),
                 '0', '1', '0',
-                '2010-11-11 10:11:11', '2011-03-18 20:11:11' );
+                '2010-11-11 10:11:11', '2011-03-18 20:11:11', '1' );
 
 insert into web_site ( support_email, birth_year, meta_keywords,
                        meta_description, meta_author, about,

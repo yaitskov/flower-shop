@@ -1,3 +1,38 @@
-div.registration {
-    clear: both;
+.user-login-label {
+    background: none;
+    position: absolute;
+    width: 110px;
+    overflow: hidden;
 }
+
+.user-login-label > div {
+    width: 100%;
+    margin-top: 17px;    
+    text-align: center;
+    background: none;
+    height: 20px;
+    position: relative;
+    left: -4px;
+    color: white;
+}
+
+
+
+.user-panel {
+    z-index: 2;
+    position: absolute;
+    width: 200px;
+    height: 200px;
+    opacity: 70;
+    padding: 5px;
+    padding-left: 10px;
+    padding-right: 10px;            
+    border: 1px solid #80c087;    
+    background-color: #fff5f3;
+    -moz-border-radius: 10px;
+    -webkit-border-radius: 10px;
+    -khtml-border-radius: 10px;
+    border-radius: 10px !important;
+    
+}
+

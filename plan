@@ -1,9 +1,24 @@
-+перенести схему данных из yaml в mysql
 
-+заполнить словари
+Add to ieditor horizonatal resizing by mouse
 
-+заполнить тестовыми данными базу
++ gallary
++ map
++ delete and add a shop
 
-+переписать стиль сайта
 
-+динамический заголовок 
+
+Update common info of a shop page:
+
+
+
+Tree of Filter Classes  as Decorators
+
+
+TimeValidator extends CValidator
+
+StubModel class extends CModel. It contatins one field with a value to
+be validated.
+
+release FlowerShop update page with TimeValidator and Tree of
+decorating classes.
+

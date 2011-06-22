@@ -4,8 +4,7 @@
    * Editing the list of shops and common site description.
    */
 class AboutusController extends Controller
-{
-  
+{  
   /**
    * @var string page's menu 
    */
@@ -43,8 +42,7 @@ class AboutusController extends Controller
    */
   public function actions(){
     return array (
-      // either attached files or embedded images is automatically removed
-      // when their references is removed from text
+      // actions for uploading files and including them into their documents
       'insert_into_common_description' => array (
         'class' => 'AttachFileToCommonDescription',
       ),
@@ -54,10 +52,33 @@ class AboutusController extends Controller
     );
   }
   /**
-   * Specifies the access control rules.
-   * This method is used by the 'accessControl' filter.
-   * @return array access control rules
+   * invert shop's attribute 'enabled'
    */
+  public function actionFreeze_unfreeze_shop($id) {
+    $fs = $this->loadFlowerShop($id);
+    $fs->enabled ^= 1;
+    if (!$fs->save(true, array('enabled'))) {
+      $form = $this->beginWidget('FormRow', array());
+      echo $form->errorSummary($fs);
+      $this->endWidget();
+    } else {
+      $this->redirect($this->createUrl('site/aboutus', array('#' => 'shop' . $id)));
+    }
+  }
+  /**
+   * the action makes a copy of a set flower shop with new template name, let say
+   * <old name> + "copy " + <unique id>, and disables the copy. 
+   */
+  public function actionDuplicate_shop($id) {
+    $fs = $this->loadFlowerShop($id);
+    
+  }
+  protected function loadFlowerShop($id) {
+    $fs = FlowerShop::model()->findByPk($id);
+    if ($fs === null)
+      throw new CHttpException(404, "Магазин номер $id не найден");
+    return $fs;
+  }
   public function accessRules()
   {
     return array(
@@ -68,6 +89,8 @@ class AboutusController extends Controller
                              'insert_into_route_description',
                              'add_new_shop',
                              'delete_shop',
+                             'duplicate_shop',
+                             'freeze_unfreeze_shop',
                              'update_shop_info'
             ),
             'expression' => 'Yii::app()->controller->website->canUpdate ( $user )',

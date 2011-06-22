@@ -77,5 +77,5 @@ EOF
    </div>
    <div class="stop-float">
    </div>
-</div>
+
 

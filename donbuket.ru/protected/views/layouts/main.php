@@ -10,12 +10,15 @@
     <title><?php echo CHtml::encode($this->pageTitle); ?></title>
   </head>
   <body class="nospaces">
-    <?php Yii::app()->controller->widget('SiteHead'); ?>
-    <?php $this->widget( 'zii.widgets.CBreadcrumbs',
-                         array( 'links'=>$this->breadcrumbs )); 
-          echo $content; ?>
+ <div class="wwww">   
+   <?php Yii::app()->controller->widget('SiteHead'); ?>
+   <?php $this->widget( 'zii.widgets.CBreadcrumbs', array( 'links'=>$this->breadcrumbs )); ?>
+   <?= $content; ?>
+      <div style="height:100px;"></div>
+  </div>
 
-    <div class="footer-of-site-page rounded-corners">
+    <div align="center" class="footer-of-site-page rounded-corners">
+
       <div align="center">
         &copy; 
         <?= Yii::app()->controller->website->birth_year?>

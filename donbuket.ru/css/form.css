@@ -42,14 +42,20 @@ div.form input,
 div.form textarea,
 div.form select
 {
-	margin: 0.2em 0 0.5em 0;
+    margin: 0.2em 0 0.5em 0;
+    font-size: 12pt;
 }
+
+div.form button {
+    font-size: 12pt;    
+}
+
 
 div.form fieldset
 {
-	border: 1px solid #DDD;
-	padding: 10px;
-	margin: 0 0 10px 0;
+    border: 1px solid #DDD;
+    padding: 10px;
+    margin: 0 0 10px 0;
     -moz-border-radius:7px;
 }
 
@@ -194,6 +200,6 @@ div.form table.form { width: 100%; }
 div.form table.form td:first-child { width: 30%; }
 
 div.form table.form td:first-child label { margin-left: 20px; }
-div.form table.form td input[type=text] { margin-right: 20px; }
+div.form table.form td input[type=text] { margin-right: 20px; margin-top:6px; margin-bottom: 8px;}
 
-div.form table.form td input[type=text] { width: 100%; }
+div.form table.form td input[type=text] { width: 99%; }

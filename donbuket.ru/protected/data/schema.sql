@@ -110,6 +110,8 @@ CREATE TABLE flower_posy (
 
 CREATE TABLE flower_shop (
        id BIGINT AUTO_INCREMENT,
+       enabled tinyint(1) not null default 1
+             comment 'признак того что запись рабочая и ее можно показывать обычным посетителям',
        phone VARCHAR(255) character set utf8 collate utf8_unicode_ci
              comment 'телефон магазина, также у каждого сотрудника есть опция
                      считать его телефон телефоном магазина ( например когда он дежурный )',

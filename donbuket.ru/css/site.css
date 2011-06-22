@@ -32,13 +32,37 @@ body {
     /* background body is vertial gradient */
     background-image: url("/images/background.png");
     background-repeat:repeat-x; 
-    background-color: #fff5f3;
-    
+    background-color: #fff5f3;    
 }
+/* stick footer to bottom of a page*/ 
+html,body {
+    height: 100%;
+    margin: 0px;
+    padding: 0px;
+}
+
+/* .body-stick-wrap { */
+/*     min-height: 100%; */
+/*     height: auto !important; */
+/*     height: 100%; */
+    /*margin: 0 auto;    */
+/* } */
+    /* footer stick; fixed height is required*/
+/* .fixed-height { height: 2cm; } */
+
+/* end stick */
 p, a, div, span {
     font-size: 12pt;
     font-family: Times New Roman, serif;    
     color: #443344;    
+}
+
+div.error {
+    font-size: 16pt;
+    color: #D22;
+    margin-top: 1cm;
+    font-family: Times New Roman, serif;    
+    text-indent: 1.4cm;
 }
 h1, h2, h3, h4, h5, h6, h7 {
     color: #333333;
@@ -109,18 +133,29 @@ header */
     width: 980px;    
     margin-left: auto;
     margin-right: auto;    
+
+/* */
+}
+.wwww {
+    padding: 0 0 0px 0;
+    height: 100%
+    height: auto !important;
+    min-height: 100%;     
 }
 
 .footer-of-site-page  {
     width: 980px;
     margin-left: auto;
     margin-right: auto;
-    margin-top: 60px;
+    margin-top: 10%;
+    margin-bottom: 2px;
     padding-top: 5px;
     border: 1px solid #80c087;
     border-bottom: 0px solid #80c087;
     border-right: 0px solid #80c087;
-    border-left: 0px solid #80c087;    
+    border-left: 0px solid #80c087;
+    margin: -57px auto auto auto;
+
 }
 .footer-of-site-page > div {
     margin-bottom: 6px;
@@ -128,10 +163,13 @@ header */
 
 .breadcrumbs {
     position: relative;
-    top: -60px;
+    top: -45px;
     left: 35%;
+    max-width: 410px;
+    z-index: -2;
 }
 
 .breadcrumbs > a, .breadcrumbs > a:hover {
     color: #80CFFF;
 }
+

@@ -1,5 +1,6 @@
+<?= CHtml::link('', '', array( 'name' => 'shop' . $data->id)); ?>   
 <div class='page-section-body'>
-  <div align='center'>
+  <div align='center'>   
   <div style='width: <?= $this->website->map_width; ?>' class='float-left shop-card'>
     <div>
       <div>
@@ -70,11 +71,18 @@
                                    'id' => $data->id ),
                 'visible'=> $canUpdate
          ),
-         array( 'label'  => 'Удалить магазин',
+         array( 'label'  => 'Удалить',
                 'url'    => array( 'aboutus/delete_shop',
                                    'id' => $data->id ),
-                'visible'=> $canUpdate
-         ),         
+                'visible'=> $canUpdate),         
+         array( 'label'  => 'Дублировать',
+                'url'    => array( 'aboutus/duplicate_shop',
+                                   'id' => $data->id ),
+                'visible'=> $canUpdate),         
+         array( 'label'  => $data->enabled ? 'Скрыть' : 'Показать',
+                'url'    => array( 'aboutus/freeze_unfreeze_shop',
+                                   'id' => $data->id ),
+                'visible'=> $canUpdate),         
          array( 'label'  => 'Добавить магазин',
                 'url'    => array( 'aboutus/add_new_shop' ),
                 'visible'=> $canUpdate

@@ -195,7 +195,7 @@ div.login-form input:hover, div.form input:hover {
     color: #fff;
 }
 
-div.form input[type=text] { padding-left: 5px; }
+div.form input[type=text], div.form input[type=password]{ padding-left: 5px; }
 div.form table.form { width: 100%; }
 div.form table.form td:first-child { width: 30%; }
 

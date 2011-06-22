@@ -5,10 +5,11 @@
     margin-left: 20px;
 }
 
-.shop-card  span {
+.shop-card  span.phone, .shop-card  span.worktime {
     color: red;
     font-weight: bold;
 }
+.shop-card  span.phone { margin-left: 4px; margin-right: 10px; }
 .shop-card > div:first-child > div {
     padding: 3px;
 }

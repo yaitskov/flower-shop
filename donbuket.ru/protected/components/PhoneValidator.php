@@ -10,9 +10,10 @@ class PhoneValidator extends CValidator {
    */
   public $min = 5;
   protected function validateAttribute($model, $attribute) {
-    if (!preg_match('/^[+]?([0-9]{1,}[-]?){1,10}[0-9]$/',
+    if (strlen($model->$attribute)
+        and (!preg_match('/^[+]?([0-9]{1,}[-]?){1,10}[0-9]$/',
                     $model->$attribute)
-        or strlen($model->$attribute) < $this->min )
+             or strlen($model->$attribute) < $this->min ))
       $model->addError($attribute,
                        'Проверте номер телефона, он содержит ошибку. Цифры номера допускается разделять символами тире.');
   }

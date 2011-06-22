@@ -14,6 +14,7 @@ class TimeValidator extends CValidator {
    * @return void
    */   
   protected function validateAttribute($model, $attribute) {
+    if (!strlen($model->$attribute)) return;
     if ($this->withoutSeconds)
       $pattern = '/^([0-9]{2}):([0-9]{2})$/';
     else

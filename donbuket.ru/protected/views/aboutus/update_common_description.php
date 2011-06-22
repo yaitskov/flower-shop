@@ -23,6 +23,7 @@ $this->breadcrumbs = array ( 'О нас, общее описание' );
 
                      <div class="row buttons">
   <?php echo CHtml::submitButton('Сохранить'); ?>
+  <?php echo MyHtml::getButton('Отмена', '/site/aboutus'); ?>  
 
 	</div>
 <?php $this->endWidget(); ?>  

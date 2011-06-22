@@ -13,7 +13,9 @@
      <table class='form'>
      <?php
      echo $form->genFormRow($model, 'name') 
-     . $form->genFormRow($model, 'phone') 
+     . $form->genFormRow($model, 'phone')
+     . $form->genFormRow($model, 'mail_address')
+     . $form->genFormRow($model, 'email_address')           
      . $form->genFormRow($model, 'pretty_start_work_at')
      . $form->genFormRow($model, 'pretty_end_work_at')
      . $form->genFormCell($model, 'outline_route', $form->createAreaType());
@@ -24,7 +26,9 @@
      </table>
      <div class="row buttons">
        <?php echo CHtml::submitButton( $model->isNewRecord ? 'Создать' : 'Сохранить'); ?>
-       <?php echo MyHtml::getButton('Отмена', '/site/aboutus'); ?>  
+       <?php echo MyHtml::getButton('Отмена',
+                                    $this->createUrl('site/aboutus',
+                                                     $model->isNewRecord ? array() : array('#' => 'shop' . $model->id))); ?>  
      </div>
 <?php $this->endWidget(); ?>
 

@@ -5,11 +5,12 @@ class FormRow extends CActiveForm {
   /**
    * @return String html table row ( triple of field caption, field value  and errrors )
    */
-  public function genFormRow($model, $name, $type = null) {
+  public function genFormRow($model, $name, $type = null, $hint = null) {
     if ($type === null) $type = $this->defaultFieldType();
     return (CHtml::tag( 'tr', array(),
                         CHtml::tag('td', array(), $this->labelEx($model, $name))
-                        .  CHtml::tag('td', array(), $type->drawField($model, $name)))
+                        .  CHtml::tag('td', array(), $type->drawField($model, $name)
+                                      . ( $hint !== null ? CHtml::tag('div' ,array('class' => 'hint'), $hint ) : "" )))
             . CHtml::tag('tr', array(),
                    CHtml::tag('td')
                          . CHtml::tag('td', array(), $this->error($model, $name))));

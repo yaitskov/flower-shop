@@ -27,7 +27,10 @@ class UniqueErrorMessagesFilter extends HookWrap {
   }
   protected function hookg_errors() {
     return $this->hookm_getErrors();
-  }  
+  }
+  public static function create($host) {
+    return new UniqueErrorMessagesFilter($host);
+  }
 }
 
 ?>

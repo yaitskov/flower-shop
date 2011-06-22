@@ -69,14 +69,14 @@ insert into product_category (name, catorder, is_flower, publisher_id)
 insert into flower_shop ( phone, start_work_at, end_work_at,
                           email_address, mail_address, outline_route,
                           map_center_x, map_center_y,
-                          place_x, place_y, name )
+                          place_x, place_y, name, enabled )
        values ( '+7-928-159-00-04', '08:00', '11:00',
        
                 'flowers@yandex.ru', 'Ростов-на-Дону, ул. Строителей, д. 3',
                 'Из центра к нам можно добраться на маршрутке #3 или автобусе 3А',
                 
                 '39.76857',  '47.267104',
-                '39.786857', '47.267104', 'Трансильвания');
+                '39.786857', '47.267104', 'Трансильвания', 1);
 -- о цветы
 insert into flower (comment, howcare, legheight,
                     work_factor,  sex_id, publisher_id,

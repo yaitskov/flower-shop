@@ -27,19 +27,33 @@ class FlowerShop extends CActiveRecord
 {
   public $pretty_start_work_at;
   public $pretty_end_work_at;
+  public $place;
+  public $map_center;
+  public function unpackCoords() {
+    $map = explode(',', $this->map_center);
+    $this->map_center_x = substr($map[0],0,9);
+    $this->map_center_y = substr($map[1],0,9);
+    $place = explode(',', $this->place);      
+    $this->place_x = substr($place[0],0,9);
+    $this->place_y = substr($place[1],0,9);
+  }
   /**
    * @return boolean
-   */
+   */  
   protected function beforeSave() {
     $addSeconds = function ($time) { return $time . ':00'; };    
     $this->start_work_at = $addSeconds($this->pretty_start_work_at);
     $this->end_work_at   = $addSeconds($this->pretty_end_work_at);
+    if ('map' === $this->scenario) 
+      $this->unpackCoords();
     return true;
   }
   protected  function afterFind(){
     $dropSeconds = function ($time) { return preg_replace('/^([0-9]{2}:[0-9]{2}):[0-9]+$/', '\1', $time); };
     $this->pretty_start_work_at = $dropSeconds($this->start_work_at);
-    $this->pretty_end_work_at   = $dropSeconds($this->end_work_at);    
+    $this->pretty_end_work_at   = $dropSeconds($this->end_work_at);
+    $this->place = $this->place_x . ',' . $this->place_y;
+    $this->map_center = $this->map_center_x . ',' . $this->map_center_y;
     parent::afterFind();
   }
   public function canUpdate ( WebUser $user ){
@@ -66,6 +80,7 @@ class FlowerShop extends CActiveRecord
     // delete description files and route files
     foreach( $this->routeFile as $rfile)
       $rfile->delete();
+    // todo: delete gallary
     return parent::beforeDelete();
   }
   public function deleteTrashFiles() {
@@ -80,14 +95,23 @@ class FlowerShop extends CActiveRecord
   {
     return array(
       array('name', 'required'),
+      array('map_center, place, map_scale', 'required', 'on' => 'map'),
+      array('enabled', 'default', 'setOnEmpty' => false, 'value' => 0, 'on' => 'insert' ),
       array('phone, name, email_address, pretty_start_work_at, pretty_end_work_at',
             'filter', 'filter' => 'trim'),      
       array('phone, name', 'length', 'max'=>255),
+      array('name', 'unique'),      
       array('phone', 'PhoneValidator'),
       array('email_address', 'length', 'max'=>100),
       array('email_address', 'email' ),
-      array('map_center_x, map_center_y, place_x, place_y', 'length', 'max'=>9),
+      array('mail_address', 'length', 'max' => 400 ),
+      array('map_center,place', 'match',
+            'pattern' => '/^[0-9]{2}[.][0-9]{4,},[0-9]{2}[.][0-9]{4,}$/',
+            'message' => 'Поле имеет недопустимый формат. Попробуйте выполнить операцию из подсказки (выше), чтобы задать правильное значение',
+            'on' => 'map'
+      ),      
       array('map_scale, views', 'length', 'max'=>20),
+      array('map_scale', 'numerical', 'max' => 17, 'min' => 3, 'integerOnly' => true),
       array('start_work_at, end_work_at', 'safe'),
       array('pretty_start_work_at, pretty_end_work_at',
             'TimeValidator', 'withoutSeconds' => true,
@@ -127,9 +151,11 @@ class FlowerShop extends CActiveRecord
       'outline_route' => 'Как добраться до магазина',
       'map_center_x' => 'Х координата цетра карты',
       'map_center_y' => 'Y координата цетра карты',
+      'map_center' => 'Координаты цетра карты',
+      'place' => 'Координаты магазина',      
       'place_x' => 'X координата магазина на карте',
       'place_y' => 'Y координата магазина на карте',
-      'map_scale' => 'Map Scale',
+      'map_scale' => 'Масштаб карты',
       'views' => 'Views',
     );
   }

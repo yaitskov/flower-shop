@@ -3,16 +3,25 @@
   <div align='center'>   
   <div style='width: <?= $this->website->map_width; ?>' class='float-left shop-card'>
     <div>
+   <?php if ($data->mail_address): ?>
       <div>
         <?= CHtml::encode( $data->mail_address ) ?>
       </div>
+   <?php endif;?>
       <div>
-        <span><?= CHtml::encode( $data->phone ) ?></span>
+   <?php if ($data->phone): ?>
+        <span>тел. </span><span class='phone'><?= CHtml::encode( $data->phone ) ?></span>
+   <?php endif; ?>
+   <?php if ($data->email_address): ?>
+        <span style='margin-left: 20px;'><?= CHtml::mailto( $data->email_address ) ?></span>
+   <?php endif; ?>
       </div>
+   <?php if ($data->start_work_at != '00:00:00' and $data->end_work_at != '00:00:00'): ?>
       <div style='display: inline;'>
-        Ежедневно с <span><?=Yii::app()->cfrm->ftime($data->start_work_at)?></span>
-        до <span><?=Yii::app()->cfrm->ftime($data->end_work_at)?></span>
+        Ежедневно с <span class='worktime'><?=Yii::app()->cfrm->ftime($data->start_work_at)?></span>
+        до <span class='worktime'><?=Yii::app()->cfrm->ftime($data->end_work_at)?></span>
       </div>
+   <?php endif; ?>
     </div>
     <div>
        <?= $data->outline_route ?>
@@ -21,7 +30,7 @@
    </div>
   </div>
 
-   <?php if (false) $this->widget(
+   <?php if ($data->place_x and $data->map_center_x) $this->widget(
              'YandexMap',
              array( 'places' =>
                     array ( array ( 'x' => $data->place_x,
@@ -74,7 +83,7 @@
          array( 'label'  => 'Удалить',
                 'url'    => array( 'aboutus/delete_shop',
                                    'id' => $data->id ),
-                'visible'=> $canUpdate),         
+                'visible'=> $canUpdate and $data->count() - 1),         
          array( 'label'  => 'Дублировать',
                 'url'    => array( 'aboutus/duplicate_shop',
                                    'id' => $data->id ),
@@ -90,5 +99,6 @@
        ),
      )
    );   ?>
+   <div style="height: 40px;"></div>
 
     

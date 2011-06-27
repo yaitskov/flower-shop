@@ -37,7 +37,19 @@ $this->widget(
       array( 'label'  => 'Править подпись',
              'url'    => array( 'aboutus/update_photo_caption',
                                 'aeid' => $data->id )
-      ),      
+      ),
+      array( 'label'  => $data->is_visible ? 'Скрыть' : 'Показать',
+             'url'    => array( 'aboutus/freeze_unfreeze_photo',
+                                'aeid' => $data->id )
+      ),
+      array( 'label'  => 'Выше',
+             'url'    => array( 'aboutus/up_photo',
+                                'aeid' => $data->id )
+      ),            
+      array( 'label'  => 'Ниже',
+             'url'    => array( 'aboutus/down_photo',
+                                'aeid' => $data->id )
+      ),                  
     )
   )
 );

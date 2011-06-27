@@ -100,4 +100,28 @@ class AlbumElement extends CActiveRecord
       'description' => 'Описание'      
     );
   }
+  /**
+   * @return AlbumElement or null
+   */  
+  protected function findNeighbourElement($op, $ord) {                              
+    return $this->find(
+      array(
+        'condition' => 'album_id = :ai and itmorder ' . $op . ' :io',
+        'order' => 'itmorder ' . $ord,
+        'params' => array(':ai' => $this->album_id, ':io' => $this->itmorder)
+      ),
+      array()); 
+  }
+  /**
+   * @return AlbumElement or null
+   */
+  public function findNextElement() {
+    return $this->findNeighbourElement('>', 'asc');
+  }
+  /**
+   * @return AlbumElement or null
+   */  
+  public function findPreviousElement() {
+    return $this->findNeighbourElement('<', 'desc');    
+  }
 }

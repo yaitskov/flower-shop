@@ -70,9 +70,7 @@ class AboutusController extends Controller
    */
   public function actionUpdate_photo_caption($aeid) {
 
-    $ae = AlbumElement::model()->findByPk($aeid);
-    if (null === $ae)
-      throw new UserEx("Запись альбома $aeid не найдена");
+    $ae = $this->loadAlbumElement($aeid);
     if (isset($_POST['AlbumElement'])) {
       $ae->attributes = $_POST['AlbumElement'];
       if ($ae->save(true, array('caption', 'description'))) 
@@ -119,6 +117,20 @@ class AboutusController extends Controller
         'fileAR' => array  ( 'class' => 'PhotoArWrapperCreator' ),
       ),      
     );
+  }
+  /**
+   * @param Integer id of album_element
+   */
+  public function actionFreeze_unfreeze_photo($aeid) {
+    $ae = $this->loadAlbumElement($aeid);
+    $ae->is_visible ^= 1;
+    if ($ae->save(true, array('is_visible'))) {
+      $this->redirect($this->urlOfPhoto($ae));
+    } else {
+      $form = $this->beginWidget('FormRow', array());
+      echo $form->errorSummary($ae);
+      $this->endWidget();      
+    }    
   }
   /**
    * invert shop's attribute 'enabled'
@@ -182,11 +194,9 @@ class AboutusController extends Controller
     }
   }
   public function actionDelete_photo($id) {
-    $ae = AlbumElement::model()->findByPk($id);
+    $ae = $this->loadAlbumElement($id);
     // todo find nearest image
     // todo if it is last image redirect to site/aboutus#shop
-    if (null === $ae)
-      throw new UserEx("Фотография $id не найдена.");
     if ($ae->delete()) {
       if ($ae->countByAttributes(array('album_id' => $ae->album_id)))
         $this->redirect($this->createUrl('aboutus/update_shop_gallery',
@@ -272,10 +282,13 @@ class AboutusController extends Controller
                              'add_new_shop',
                              'delete_shop',
                              'update_map',
+                             'freeze_unfreeze_photo',                             
                              'add_photo',
                              'update_photo_caption',
                              'delete_photo',
                              'update_shop_gallery',
+                             'up_photo',
+                             'down_photo',
                              'delete_map',
                              'duplicate_shop',
                              'freeze_unfreeze_shop',
@@ -306,5 +319,49 @@ class AboutusController extends Controller
                        . ExtractStringsFromArray(UniqueErrorMessagesFilter::create($fs)->errors));
     // I think a state when all shops don't fit on one page never happen
     $this->redirect('/site/aboutus');     
+  }
+  protected function loadAlbumElement($aeid) {
+    $ae = AlbumElement::model()->findByPk($aeid);
+    if (null === $ae) 
+      throw new UserEx("Элемент альбома $aeid не найден");
+    return $ae;
+  }
+
+  
+  public function actionUp_photo($aeid) {
+    $this->movePhoto($aeid,'up');
+  }
+  /**
+   * @param String dir 'up' or 'down'
+   */
+  protected function movePhoto($aeid, $dir) {
+    $ae = $this->loadAlbumElement($aeid);
+    if ('up' === $dir) 
+      $pae = $ae->findPreviousElement();
+    elseif ('down' === $dir)
+      $pae = $ae->findNextElement();
+    else
+      throw new Exception("invalid \$dir value = '$dir'");
+
+    if (is_object($pae)) {
+        // change itmorder values
+        $tmp = $ae->itmorder;
+        $ae->itmorder = $pae->itmorder;
+        $pae->itmorder = $tmp;
+        $con = $ae->dbConnection;
+        $tran = $con->beginTransaction();
+        if ($ae->save() and $pae->save())
+          $tran->commit();
+        else {
+          $tran->rollBack();
+          $form = $this->beginWidget('FormRow', array());
+          echo $form->errorSummary($ae);
+          $this->endWidget();      
+        }          
+    }
+    $this->redirect($this->urlOfPhoto($ae));
+  }
+  public function actionDown_photo($aeid) {
+    $this->movePhoto($aeid,'down');    
   }
 }

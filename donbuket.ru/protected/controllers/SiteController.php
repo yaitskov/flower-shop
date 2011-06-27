@@ -2,6 +2,27 @@
 
 class SiteController extends Controller
 {
+  /**
+   * there is "fifth wheel" because a browser cannot detect mime time
+   * of file itself.
+   */
+  public function actionGetFile($hash) {
+    $path = base64_decode(preg_replace('/[.](png|jpg|jpeg|gif)$/', '', $hash));
+    $path = preg_replace('/[.]/', '', $path);
+    $finfo = finfo_open(FILEINFO_MIME_TYPE);
+    //    var_dump($finfo);
+    //    echo "$path\n";
+    $path = Yii::app()->filestorage->pathToFile($path);
+    if (!file_exists($path))
+      $path = Yii::app()->basePath . DIRECTORY_SEPARATOR . '..'
+        . DIRECTORY_SEPARATOR . 'images' . DIRECTORY_SEPARATOR . 'nofile.png';
+    $mime = finfo_file($finfo, $path);
+    finfo_close($finfo);
+    header('Content-Type: ' . $mime);
+    //    echo $mime;
+    //    exit;    
+    echo file_get_contents($path);    
+  }
   public function actionTest() {
     $t = Yii::app()->filestorage;
     echo realpath ( $t->pathToStorage ), "<br>";
@@ -27,14 +48,15 @@ class SiteController extends Controller
         'class'=>'CCaptchaAction',
         'backColor'=>0xFFFFFF,
       ),
-      // page action renders "static" pages stored under 'protected/views/site/pages'
-      // They can be accessed via: index.php?r=site/page&view=FileName
-      'page'=>array(
-        'class'=>'CViewAction',
-      ),
+      'thumbnail' => array ( 'class' => 'ThumbnailAction',
+                             'storage' => Yii::app()->filestorage )
     );
   }
 
+  /**
+   * @param callback creator
+   * @return GalleryItemIf
+   */
   public function createAlbumElementGalleryItem ( $album_element ){
     return new AlbumElementGalleryItem ( $album_element );
   }

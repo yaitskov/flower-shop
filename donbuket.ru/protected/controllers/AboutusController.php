@@ -9,6 +9,7 @@ class AboutusController extends Controller
    * @var string page's menu 
    */
   public $layout='//layouts/column2';
+
   /**
    * a user can change or format the content of common desctiption of the site
    */
@@ -23,7 +24,7 @@ class AboutusController extends Controller
     $this->render('update_common_description', array('model'=>$this->website));    
   }
   public function getShopUrl($shop) {
-    $params = $shop->isNewRecord ? array() : array('#' => 'shop' . $shop->id);    
+    $params = (is_null($shop) or $shop->isNewRecord) ? array() : array('#' => 'shop' . $shop->id);    
     return $this->createUrl('site/aboutus', $params);
   }
   protected function gotoShop($shop) {
@@ -44,6 +45,26 @@ class AboutusController extends Controller
     }
     $this->render('update_flower_shop', array('model'=>$model));        
   }
+
+  protected function getShopFor(){
+    if ($galid = Yii::app()->request->getParam('id',null)) {
+      $g = Album::model()->findByPk($galid);
+      if ($g === null)
+        throw UserEx('Альбом ' . $galid . ' не найден');
+      $al = FlowerShop::model()->findByAlbum($g);
+      if ($al === null)
+        throw UserEx('Альбом ' . $galid . ' не принадлежит ни к одному из магазинов' );
+      return $this->createUrl('aboutus/update_shop_gallery',
+                              array('id' => $al->id));
+    }
+    return $this->createUrl('site/aboutus');
+  }
+
+  protected function getShopByAlbum($albumid) {
+    if ($albumid) {
+      return $this->getShopUrl( FlowerShop::model()->findByAlbum(Album::model()->findByPk($albumid)));
+    }
+  }
   /**
    *
    */
@@ -55,7 +76,21 @@ class AboutusController extends Controller
       ),
       'insert_into_route_description' => array (
         'class' => 'AttachFileToRouteDescription',
-      )
+      ),
+      'add_photo' => array (
+        'class' => 'UploadAlbumPhoto',
+        'viewname' => '//upload', 
+        'caption' => 'Фотография',
+        'fixedRedirect' => $this->getShopFor(),
+        'useReturnUrl' => false,
+        'cancelPath' => $this->getShopByAlbum(Yii::app()->request->getParam('id')),
+        'uploadForm' => array ( 'class' => 'UploadForm',
+                                'fileTypes' => 'jpg, jpeg, png, gif',
+                                'maxSize' => 2*1024*1024,
+                                'fieldName' => 'Фотография',
+                                'allowEmpty' => false  ),
+        'fileAR' => array  ( 'class' => 'PhotoArWrapperCreator' ),
+      ),      
     );
   }
   /**
@@ -96,6 +131,48 @@ class AboutusController extends Controller
    * upload, rearrange and delete photos of the shop.
    */
   public function actionUpdate_shop_gallery($id) {
+    $fs = $this->loadFlowerShop($id);
+    if ($fs->gallery === null) {
+      $gallery = new Album();
+      if (!$gallery->save())
+        throw UserEx("Ошибка при создании галереии для магазина '" . $fs->name . "'");
+      $fs->views = $gallery->id;
+      if (!$fs->save(true, array('views'))) {
+        $gallery->delete();
+        throw UserEx("Ошибка при назначении галереии для магазина '" . $fs->name . "'");
+      }
+    } else
+      $gallery = $fs->gallery;
+
+    $provider = $gallery->getElementsProvider();
+    if ($provider->totalItemCount) {
+
+      $this->render( 'update_shop_gallery',
+                     array('photoes' => $provider, 'shop' => $fs));
+    } else {// just add new photo
+
+      $this->redirect($this->createUrl('aboutus/add_photo', array('id' => $gallery->id)));
+    }
+  }
+  public function actionDelete_photo($id) {
+    $ae = AlbumElement::model()->findByPk($id);
+    // todo find nearest image
+    // todo if it is last image redirect to site/aboutus#shop
+    if (null === $ae)
+      throw new UserEx("Фотография $id не найдена.");
+    if ($ae->delete()) {
+      if ($ae->countByAttributes(array('album_id' => $ae->album_id)))
+        $this->redirect($this->createUrl('aboutus/update_shop_gallery',
+                                         array('id' => FlowerShop::model()->findByAlbum($ae->album)->id)));
+      else
+        $this->redirect($this->createUrl('site/aboutus',
+                                         array('#' => 'shop' . FlowerShop::model()->findByAlbum($ae->album)->id)));        
+    } else {
+      $o = new UniqueErrorMessagesFilter($ae);
+      throw new UserEx ("Не удалось удалить фотографию '"
+                        . $ae->origName . "' из албома " . $ae->album_id . ":\n"
+                        . ExtractStringsFromArray::doit( $o->errors," "));      
+    }
   }
   /**
    * the action makes a copy of a set flower shop with new template name, let say
@@ -106,7 +183,26 @@ class AboutusController extends Controller
     $nfs = new FlowerShop();
     $nfs->attributes = $fs->attributes;
     $nfs->pretty_start_work_at = $fs->pretty_start_work_at;
-    $nfs->pretty_end_work_at = $fs->pretty_end_work_at;    
+    $nfs->pretty_end_work_at = $fs->pretty_end_work_at;
+    if ($fs->gallery) {
+      $ngallery = new Album();
+      $ngallery->attributes = $fs->gallery->attributes;
+      if (!$ngallery->save())
+        throw new UserEx("Дублирование магазина не возможно из-за ошибки копирования галерии");
+      foreach ($fs->gallery->elements as $element) {
+        $nelement = new AlbumElement();
+        $nelement->attributes = $element->attributes;
+        $nelement->album_id = $ngallery->id;
+        try {
+          if ($nelement->save()) { }
+            $nelement->photo->allocateReference();
+        } catch (Exception $e) {
+          $nelement->delete();
+        }
+      }
+      $nfs->views = $ngallery->id;      
+    }
+
     $nfs->enabled = 0;
     $basename = preg_replace('/( *копия *[0-9]+)* *$/', '', $nfs->name);
     $i = 1;
@@ -116,6 +212,8 @@ class AboutusController extends Controller
       $i++;
     }    
     if ($nfs->isNewRecord) {
+      if (isset($ngallery))
+        $ngallery->delete();
       $o = new UniqueErrorMessagesFilter($nfs);
       throw new UserEx ("Не удалось копировать магазин:\n"
                         . ExtractStringsFromArray::doit( $o->errors," "));
@@ -147,6 +245,9 @@ class AboutusController extends Controller
                              'add_new_shop',
                              'delete_shop',
                              'update_map',
+                             'add_photo',
+                             'delete_photo',
+                             'update_shop_gallery',
                              'delete_map',
                              'duplicate_shop',
                              'freeze_unfreeze_shop',

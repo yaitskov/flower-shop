@@ -21,8 +21,7 @@
  * @property ProductCategory[] $productCategories
  * @property SiteUser[] $siteUsers
  */
-class Photo extends CActiveRecord
-{
+class Photo extends File {
   /**
    * Returns the static model of the specified AR class.
    * @return Photo the static model class
@@ -33,28 +32,23 @@ class Photo extends CActiveRecord
   }
 
   /**
-   * @return string the associated database table name
-   */
-  public function tableName()
-  {
-    return 'photo';
-  }
-
-  /**
    * @return array validation rules for model attributes.
    */
 
   public function relations()
   {
-    return array(
-      'albumElements' => array(self::HAS_MANY, 'AlbumElement', 'photo_id'),
-      'flowers' => array(self::HAS_MANY, 'Flower', 'icon_id'),
-      'paymentTypes' => array(self::HAS_MANY, 'PaymentType', 'icon_id'),
-      'posys' => array(self::HAS_MANY, 'Posy', 'icon_id'),
-      'posyViews' => array(self::HAS_MANY, 'PosyView', 'icon_id'),
-      'products' => array(self::HAS_MANY, 'Product', 'icon_id'),
-      'productCategories' => array(self::HAS_MANY, 'ProductCategory', 'icon_id'),
-      'siteUsers' => array(self::HAS_MANY, 'SiteUser', 'face_id'),
+    return array_merge(
+      parent::relations(),
+      array(
+        'albumElements' => array(self::HAS_MANY, 'AlbumElement', 'photo_id'),
+        'flowers' => array(self::HAS_MANY, 'Flower', 'icon_id'),
+        'paymentTypes' => array(self::HAS_MANY, 'PaymentType', 'icon_id'),
+        'posys' => array(self::HAS_MANY, 'Posy', 'icon_id'),
+        'posyViews' => array(self::HAS_MANY, 'PosyView', 'icon_id'),
+        'products' => array(self::HAS_MANY, 'Product', 'icon_id'),
+        'productCategories' => array(self::HAS_MANY, 'ProductCategory', 'icon_id'),
+        'siteUsers' => array(self::HAS_MANY, 'SiteUser', 'face_id'),
+      )
     );
   }
 

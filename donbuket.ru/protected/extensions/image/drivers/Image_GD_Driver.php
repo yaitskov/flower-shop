@@ -47,35 +47,45 @@ class Image_GD_Driver extends Image_Driver {
 			break;
 		}
 
-		// Set the "save" function
-		switch (strtolower(substr(strrchr($file, '.'), 1)))
-		{
-			case 'jpg':
-			case 'jpeg':
-				$save = 'imagejpeg';
-			break;
-			case 'gif':
-				$save = 'imagegif';
-			break;
-			case 'png':
-				$save = 'imagepng';
-			break;
-		}
-
-		// Make sure the image type is supported for import
-		if (empty($create) OR ! function_exists($create))
-			throw new CException('image type not allowed');
-
-		// Make sure the image type is supported for saving
-		if (empty($save) OR ! function_exists($save))
-			throw new CException('image type not allowed');
-
-		// Load the image
-		$this->image = $image;
-
+                if (preg_match('/^5[.]3[.][0-9]*/', phpversion())) {
+                  // return mime type ala mimetype extension                  
+                  $finfo = finfo_open(FILEINFO_MIME_TYPE);
+                  //                  throw new Exception("DDDD" . $image['file']);
+                  if (preg_match('/^image\\/([A-z]+)$/', finfo_file($finfo, $image['file']), $matches)) {
+                    switch ($matches[1]) {
+                    case 'jpeg':
+                      $save = 'imagejpeg';
+                      break;
+                    case 'jpg':
+                      $save = 'imagejpeg';
+                      break;
+                    case 'gif':
+                      $save = 'imagegif';
+                      break;
+                    case 'png':
+                      $save = 'imagepng';
+                      break;
+                    }
+                  }
+                  finfo_close($finfo);
+                } else {
+                  throw new Exception ("realizse me for version " . phpversion());
+                }
+                
+                // Make sure the image type is supported for import
+                if (empty($create) OR ! function_exists($create))
+                  throw new CException('image type not allowed');
+                
+                // Make sure the image type is supported for saving
+                if (empty($save) OR ! function_exists($save))
+                  throw new CException('image type not allowed');
+                
+                  // Load the image
+                $this->image = $image;
+                
 		// Create the GD image resource
 		$this->tmp_image = $create($image['file']);
-
+                
 		// Get the quality setting from the actions
 		$quality = CArray::remove('quality', $actions);
 

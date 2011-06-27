@@ -52,6 +52,7 @@ class File extends CActiveRecord {
         return;
       }
       RAUtil::get()->copyInMemory($this, $f);
+      // if such file has been loaded before
       $this->numlinks ++;
       if (!$this->saveAttributes(array('numlinks'))) {
         Yii::log("It seems file was deleted in parallel request."
@@ -149,7 +150,7 @@ class File extends CActiveRecord {
     }
   }
   /**
-   *
+   *  
    */
   public function allocateReference() {
     $this->numlinks ++;

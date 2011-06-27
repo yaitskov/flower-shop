@@ -1,7 +1,18 @@
 <?php
 
 
-class SmoothmGalleryWidget extends CWidget {
+class SmoothGalleryWidget extends CWidget {
+  public static function getThumbnailUrl(File $f, $width = null, $height = null) {
+    $params = array('imgid' => base64_encode($f->hashName));
+    if (is_numeric($width))
+      $params['width'] = $width;
+    elseif (is_numeric($height))
+      $params['height'] = $height;
+    else
+      throw new Exception("set width or height");
+    return Yii::app()->createUrl('site/thumbnail', $params);
+  }
+
   /**
    * @var array< GalleryItemIf >
    */
@@ -9,7 +20,7 @@ class SmoothmGalleryWidget extends CWidget {
   /**
    * @var string tooltip
    */
-  public $toolip = 'Открыть на новой странице';
+  public $tooltip = 'Открыть на новой странице';
   /**
    * @var integer width of the widget in pixels.
    * @default null then the value from css will be used
@@ -25,31 +36,33 @@ class SmoothmGalleryWidget extends CWidget {
    */
   public $cssClasses = null;
   public function getId (){
-    return "smoothgallery" . parent::getId();
+        return "smoothgallery" . parent::getId();
   }
   public function init (){
-    $cs = Yii::app()->clientScript;    
+  }
+  public function run (){
+    $cs = Yii::app()->clientScript;
     $am = Yii::app()->assetManager;
 
     $cssdir = $am->publish ( dirname( __FILE__ ) . DIRECTORY_SEPARATOR . 'css' );
-    $jsdir =  $am->publish ( dirname( __FILE__ ) . DIRECTORY_SEPARATOR . 'js' );
+    $gal =  $am->publish ( dirname( __FILE__ ) . DIRECTORY_SEPARATOR
+                           . 'galleria'); // . DIRECTORY_SEPARATOR
+    //                             . );
+    //    $theme = $am->publish(dirname(__FILE__) . DIRECTORY_SEPARATOR .
+    //                          'galleria' . DIRECTORY_SEPARATOR 'themes'
+    //                          . DIRECTORY_SEPARATOR . 'classic');
+    $cs->registerCssFile ( $cssdir . '/forGallery.css' );
+    //$cs->registerCssFile ( $cssdir . '/jd.gallery.css' );
+    //    $cs->registerScriptFile ( $jsdir . '/mootools.v1.11.js', CClientScript::POS_HEAD  );    
+    $cs->registerScriptFile ( $gal . '/galleria-1.2.4.min.js' , CClientScript::POS_HEAD  );    
 
-    $cs->registerCssFile ( $cssdir . '/layout.css' );
-    $cs->registerCssFile ( $cssdir . '/jd.gallery.css' );    
-    $cs->registerScriptFile ( $jsdir . '/mootools.v1.11.js'  );
-    $cs->registerScriptFile ( $jsdir . '/jd.gallery.js'  );    
-
-    $cs->registerScript ( 
+    $cs->registerScript ( $this->getId(),
                           <<<EOF
-function {$this->getId()}startGallery() {
-  var {$this->getId()} = new gallery( \$('{$this->getId()}'),
-                                      { timed: false } );
-}
-window.addEvent('domready', {$this->getId()}startGallery);
+Galleria.loadTheme('${gal}/galleria.classic.min.js');
+$('#gallery{$this->getId()}').galleria();
 EOF
-    );
-  }
-  public function run (){
+                          ,  CClientScript::POS_READY);
+    
     if ( ! count ( $this->listOfImages ) ) return;
     $classes = $this->cssClasses === null
                   ? "" : implode ( " ", $this->cssClasses );

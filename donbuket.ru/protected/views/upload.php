@@ -1,8 +1,9 @@
 <?php
 /*  this is a view template
  */
+Yii::app()->clientScript->registerCssFile('/css/form.css');
 ?>
-<div class="form">
+<div class="form" style="text-align: center; margin-top: 40px;">
   <?php
    $model = $modelForm;
    $ref = new ReflectionClass ( $modelForm );
@@ -13,18 +14,31 @@
        'enableAjaxValidation'=>false )
    );
 ?>
-
-  <p class="note">Fields with <span class="required">*</span> are required.</p>
   
   <?=  $form->errorSummary($model); ?>
-  
-  <div class="row">
-    <?= $form->labelEx($model,'tmpfile'); ?>
+
+
+  <table align='center'>
+   <tr>
+   <td  style='padding-bottom: 10px;'>
+   <?= $form->labelEx($model,'tmpfile'); ?>
+   </td>
+   <td  style='padding-bottom: 10px;'>   
     <?= $form->fileField($model,'tmpfile'); ?>
+   </td>
+   </tr>
+   <tr>
+   <td></td>
+   <td>
     <?= $form->error($model,'tmpfile'); ?>
-  </div>
+   </td>
+   </tr>
+   </table>
   <div class="row buttons">
-    <?=  CHtml::submitButton('Upload'); ?>
+    <?=  CHtml::submitButton('Загрузить'); ?>
+     <?php if(isset($this->action->cancelPath)): ?>
+     <?= MyHtml::getButton('Отмена', $this->action->cancelPath); ?>
+     <?php endif; ?>
   </div>
 
   <?php $this->endWidget(); ?>

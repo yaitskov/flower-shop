@@ -19,6 +19,7 @@ return array(
     'application.extensions.ieditor.*',
     'application.extensions.YandexMap.*',
     'application.extensions.menu.*',
+    'application.extensions.image.*',
     'application.extensions.mbmenu.*',
     'application.extensions.SmoothGallery.*',
     'application.extensions.fileStorage.*',
@@ -41,8 +42,8 @@ return array(
     
     'image' => array (
       'class' => 'application.extensions.image.CImageComponent',
-      'driver' => "ImageMagick", // ImageMagick
-      'params' =>  array ( 'directory' => '/usr/bin' ) 
+      'driver' => "GD", // ImageMagick
+      //      'params' =>  array ( 'directory' => '/usr/bin' ) 
     ),
     'cfrm' => array ( 'class' => 'application.components.CommonFormatter' ),
     'authManager' => array ( 'class' => 'CDbAuthManager',

@@ -17,7 +17,6 @@ interface GalleryItemIf {
    * @return string url to thumnail image
    */
   function getThumbnail();
-  }
 }
 
 ?>

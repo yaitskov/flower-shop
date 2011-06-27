@@ -1,0 +1,38 @@
+div.gallery_content {
+    color:#777;
+    font:12px/1.4 "helvetica neue",arial,sans-serif;
+    width:850px;
+    margin:20px auto;
+    background: none;
+}
+div.gallery_content > h1{font-size:12px;font-weight:normal;color:#ddd;margin:0;}
+div.gallery_content p{margin:0 0 20px}
+div.gallery_content a {color:#22BCB9;text-decoration:none;}
+div.gallery_content .cred {margin-top:20px;font-size:11px;}
+
+/* This rule is read by Galleria to define the gallery height: */
+div.gallery_content > div {
+    height:500px;
+    -moz-border-radius: 10px;
+    -webkit-border-radius: 10px;
+    -khtml-border-radius: 10px;
+    border-radius: 10px !important;
+    background: none;
+}
+
+div.gallery_content div.galleria-container {
+    -moz-border-radius: 10px !important;
+    -webkit-border-radius: 10px !important;
+    -khtml-border-radius: 10px !important;
+    border-radius: 10px !important;
+    border: 1px solid #80C087;
+    background: none;
+}
+
+div.gallery_content .galleria-stage .galleria-image > img {
+    -moz-border-radius: 10px !important;
+    -webkit-border-radius: 10px !important;
+    -khtml-border-radius: 10px !important;
+    border-radius: 10px !important;
+    border: 1px solid #80C087;
+}

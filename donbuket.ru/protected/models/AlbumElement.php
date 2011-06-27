@@ -25,6 +25,23 @@ class AlbumElement extends CActiveRecord
     return parent::model($className);
   }
 
+  protected function afterDelete() {
+    if (!$this->isNewRecord and $this->photo) {
+      $this->photo->releaseReference();
+    }
+    if ($this->album) $this->album->save();    
+    return parent::afterDelete();
+  }
+  public function save($validate = true, $attrs = null) {
+    if (!($r = parent::save($validate, $attrs))
+        and $this->isNewRecord
+        and $this->photo) {
+      $this->photo->releaseReference();      
+    }
+    if ($this->album) $this->album->save();
+    return $r;
+  }
+    
   /**
    * @return string the associated database table name
    */
@@ -33,30 +50,33 @@ class AlbumElement extends CActiveRecord
     return 'album_element';
   }
 
+  public function numberPhotoes(Album $al) {
+    return $this->countByAttributes(array('album_id' => $al->id));
+  }
   /**
    * @return array validation rules for model attributes.
    */
   public function rules()
   {
-    // NOTE: you should only define rules for those attributes that
-    // will receive user inputs.
     return array(
+      array('itmorder', 'default', 'setOnEmpty' => true, 'value' => 1 ),
+      array('itmorder', 'filter', 'filter' => array( $this, 'autoinc'), 'on' => 'insert'),
       array('photo_id, album_id, itmorder', 'required'),
+      array('album_id', 'exist', 'className' => 'Album', 'attributeName' => 'id'),
+      array('photo_id', 'exist', 'className' => 'Photo', 'attributeName' => 'id'),      
       array('is_visible', 'numerical', 'integerOnly'=>true),
       array('photo_id, album_id, itmorder', 'length', 'max'=>20),
-      // The following rule is used by search().
-      // Please remove those attributes that should not be searched.
-      array('id, photo_id, album_id, itmorder, is_visible', 'safe', 'on'=>'search'),
     );
   }
 
+  public function autoinc($f) {
+    return $this->countByAttributes(array('album_id' => $this->album_id)) + 1;
+  }
   /**
    * @return array relational rules.
    */
   public function relations()
   {
-    // NOTE: you may need to adjust the relation name and the related
-    // class name for the relations automatically generated below.
     return array(
       'album' => array(self::BELONGS_TO, 'Album', 'album_id'),
       'photo' => array(self::BELONGS_TO, 'Photo', 'photo_id'),
@@ -70,32 +90,10 @@ class AlbumElement extends CActiveRecord
   {
     return array(
       'id' => 'ID',
-      'photo_id' => 'Photo',
-      'album_id' => 'Album',
-      'itmorder' => 'Itmorder',
-      'is_visible' => 'Is Visible',
+      'photo_id' => 'Фотография',
+      'album_id' => 'Альбом',
+      'itmorder' => 'Вес для упорядочивания',
+      'is_visible' => 'Доступно посетителям',
     );
-  }
-
-  /**
-   * Retrieves a list of models based on the current search/filter conditions.
-   * @return CActiveDataProvider the data provider that can return the models based on the search/filter conditions.
-   */
-  public function search()
-  {
-    // Warning: Please modify the following code to remove attributes that
-    // should not be searched.
-
-    $criteria=new CDbCriteria;
-
-    $criteria->compare('id',$this->id,true);
-    $criteria->compare('photo_id',$this->photo_id,true);
-    $criteria->compare('album_id',$this->album_id,true);
-    $criteria->compare('itmorder',$this->itmorder,true);
-    $criteria->compare('is_visible',$this->is_visible);
-
-    return new CActiveDataProvider(get_class($this), array(
-      'criteria'=>$criteria,
-    ));
   }
 }

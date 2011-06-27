@@ -1,24 +1,9 @@
 
-Add to ieditor horizonatal resizing by mouse
+add to gallery item following fields:
+   caption
+   description
 
-+ gallary
-+ map
-+ delete and add a shop
-
-
-
-Update common info of a shop page:
+They should be stored in album_element relation.
 
 
-
-Tree of Filter Classes  as Decorators
-
-
-TimeValidator extends CValidator
-
-StubModel class extends CModel. It contatins one field with a value to
-be validated.
-
-release FlowerShop update page with TimeValidator and Tree of
-decorating classes.
-
+Also add control under caption and description fields.   

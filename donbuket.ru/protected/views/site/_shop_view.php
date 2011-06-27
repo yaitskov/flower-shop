@@ -30,7 +30,7 @@
    </div>
   </div>
 
-   <?php if ($data->place_x and $data->map_center_x) $this->widget(
+   <?php if (  $data->place_x and $data->map_center_x) $this->widget(
              'YandexMap',
              array( 'places' =>
                     array ( array ( 'x' => $data->place_x,
@@ -52,9 +52,10 @@
              array ( 'listOfImages' =>
                         $data->gallery->galleryImages (
                              array ( $this, 'createAlbumElementGalleryItem')
-                        )
-                    )
-           ); ?>
+                        ),
+                     'width' => 400
+             )
+   );?>
  <?php endif; ?>
   </div>
 </div>
@@ -70,7 +71,8 @@
                                    'id' => $data->id ),
                 'visible'=> $canUpdate
          ),
-         array( 'label'  => 'Править фотоки',
+         array( 'label'  => (is_object($data->gallery)
+                             and AlbumElement::model()->numberPhotoes($data->gallery)) ? 'Править фотоки' : 'Загрузить фото',
                 'url'    => array( 'aboutus/update_shop_gallery',
                                    'id' => $data->id ),
                 'visible'=> $canUpdate
@@ -83,22 +85,22 @@
          array( 'label'  => 'Удалить',
                 'url'    => array( 'aboutus/delete_shop',
                                    'id' => $data->id ),
-                'visible'=> $canUpdate and $data->count() - 1),         
+                'visible'=> $canUpdate and $data->count() - 1),
          array( 'label'  => 'Дублировать',
                 'url'    => array( 'aboutus/duplicate_shop',
                                    'id' => $data->id ),
-                'visible'=> $canUpdate),         
+                'visible'=> $canUpdate),
          array( 'label'  => $data->enabled ? 'Скрыть' : 'Показать',
                 'url'    => array( 'aboutus/freeze_unfreeze_shop',
                                    'id' => $data->id ),
-                'visible'=> $canUpdate),         
+                'visible'=> $canUpdate),
          array( 'label'  => 'Добавить магазин',
                 'url'    => array( 'aboutus/add_new_shop' ),
                 'visible'=> $canUpdate
-         ),         
+         ),
        ),
      )
-   );   ?>
+  ); ?> 
    <div style="height: 40px;"></div>
 
     

@@ -42,7 +42,7 @@ div.form input,
 div.form textarea,
 div.form select
 {
-    margin: 0.2em 0 0.5em 0;
+    margin: 5px 0 0.5em 0;
     font-size: 12pt;
 }
 
@@ -148,7 +148,7 @@ div.form .errorSummary ul
 
 div.wide.form label
 {
-	float: left;
+	/*float: left;*/
 	margin-right: 10px;
 	position: relative;
 	text-align: right;
@@ -170,7 +170,12 @@ div.wide.form .buttons, div.wide.form .hint, div.wide.form .errorMessage
 div.login-form label, div.form label {
     margin: 0px;    
     margin-right: 40px;
-    vertical-align: top;
+    margin-top: 0px;
+/*    vertical-align: top;*/
+}
+div.form input[type=file] {
+    padding: 0px;
+    margin: 0px;
 }
 div.login-form input, div.form input, .roundedc {
     border: 1px solid #80C087;

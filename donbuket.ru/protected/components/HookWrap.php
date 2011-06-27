@@ -96,7 +96,7 @@ class HookWrap {
     if ($m->isPrivate() or $m->isProtected())
       throw new Exception("Method '" . $m->class . '::'
                           . $m->name . "' is not public");
-    return $m->invokeArgs($args);
+    return $m->invokeArgs($this->host, $args);
   }
   /**
    * see callBaseMethodArgs

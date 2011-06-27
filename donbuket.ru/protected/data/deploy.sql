@@ -9,6 +9,6 @@ use user162_donbuket;
 \. procedures.sql
 -- triggers with high probability will be converted
 -- into php code
-\. triggers.sql
+-- \. triggers.sql
 -- boot strap data
 \. bootstrap.sql

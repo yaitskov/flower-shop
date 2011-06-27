@@ -80,8 +80,13 @@ class FlowerShop extends CActiveRecord
     // delete description files and route files
     foreach( $this->routeFile as $rfile)
       $rfile->delete();
-    // todo: delete gallary
-    return parent::beforeDelete();
+    return parent::beforeDelete();    
+  }
+  protected function afterDelete() {
+    if ($this->gallery) {
+      if (!$this->gallery->delete())
+        throw new UserEx("Нельзя удалить галерею: " . implode("<br/>\n", $this->gallery->errors));
+    }
   }
   public function deleteTrashFiles() {
     $trasher = new TrashFiles( $this->routeFile,
@@ -121,6 +126,13 @@ class FlowerShop extends CActiveRecord
     );
   }
 
+  /**
+   * @param Album
+   * @return FlowerShop or null
+   */
+  public function findByAlbum($album) {
+    return $this->findByAttributes(array('views' => $album->id));
+  }
   /**
    * @return array relational rules.
    */

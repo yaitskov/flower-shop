@@ -239,8 +239,8 @@ CREATE TABLE photo (
 
 CREATE TABLE photo_album (
        id BIGINT AUTO_INCREMENT,
-       created_at DATETIME NOT NULL ,
-       updated_at DATETIME NOT NULL ,
+       created_at DATETIME NOT NULL,
+       updated_at DATETIME NOT NULL,
        PRIMARY KEY(id)) ENGINE = INNODB
        comment 'альбом фотографий';
 

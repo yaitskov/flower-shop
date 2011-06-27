@@ -22,6 +22,7 @@ echo CHtml::tag( 'h1',
                  array ( 'class' => 'page-section-header' ),
                  'Наши магазины' );
 Yii::app()->clientScript->registerCssFile ( '/css/aboutus.css' ) ;
+
 $this->widget('zii.widgets.CListView',
               array( 'dataProvider'=>$dataProvider,
                      'itemView'=>'_shop_view' ) );

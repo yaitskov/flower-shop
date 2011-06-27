@@ -165,8 +165,10 @@ header */
     position: relative;
     top: -45px;
     left: 35%;
-    max-width: 410px;
+    max-width: 400px;
     z-index: -2;
+    text-indent: -3cm;
+    margin-left: 2cm;
 }
 
 .breadcrumbs > a, .breadcrumbs > a:hover {

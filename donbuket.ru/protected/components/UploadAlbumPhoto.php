@@ -12,6 +12,8 @@ class UploadAlbumPhoto extends UploadAction {
     if (null === $al->album_id)
       throw new UserEx("Албом не задан");
     $al->photo_id = $file->id;
+    $al->caption = $this->modelForm->caption;
+    $al->description = $this->modelForm->description;
     if ($al->save()) {
       parent::saveOkay($file);
     } else {

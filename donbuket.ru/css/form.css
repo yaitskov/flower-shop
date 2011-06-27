@@ -38,6 +38,7 @@ div.form
 {
 }
 
+textarea { resize: none; }
 div.form input,
 div.form textarea,
 div.form select
@@ -177,7 +178,7 @@ div.form input[type=file] {
     padding: 0px;
     margin: 0px;
 }
-div.login-form input, div.form input, .roundedc {
+div.login-form input, div.form input, div.form textarea, .roundedc {
     border: 1px solid #80C087;
 /*    background-color: #EFE;*/
     background: none;    
@@ -187,8 +188,20 @@ div.login-form input, div.form input, .roundedc {
     border-radius: 10px;
     font-family: "Times New Roman";
 }
-div.login-form input[type=button], div.form input[type=button], div.login-form input[type=submit], div.form input[type=submit] {
+div.login-form input[type=button],
+   div.form input[type=button],
+   div.login-form input[type=submit],
+   div.form input[type=submit], div.form textarea {
     padding: 5px;
+}
+
+div.form textarea {
+    text-indent: 1cm;
+/*    max-width: 99%;
+    min-width: 99%;*/
+    min-height: 100px;
+    /** css3 !!! */
+    resize: vertical;
 }
 
 :focus {outline:none;}
@@ -207,4 +220,6 @@ div.form table.form td:first-child { width: 30%; }
 div.form table.form td:first-child label { margin-left: 20px; }
 div.form table.form td input[type=text] { margin-right: 20px; margin-top:6px; margin-bottom: 8px;}
 
-div.form table.form td input[type=text] { width: 99%; }
+div.form table.form td input[type=text], div.form table.form td textarea {
+    width: 99%;
+}

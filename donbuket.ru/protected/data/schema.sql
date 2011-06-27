@@ -13,6 +13,10 @@ CREATE TABLE album_element (
        album_id BIGINT NOT NULL comment 'альбок к которому принадлежит элемент',
        itmorder BIGINT NOT NULL comment 'порядок фотографий в альбоме',
        is_visible TINYINT(1) DEFAULT '1' NOT NULL comment 'фотография доступна для просмотра',
+       caption varchar(40) character set utf8 collate utf8_unicode_ci
+               comment 'подпись к фотке или название фотографии. в общем как хотите',
+       description text character set utf8 collate utf8_unicode_ci
+               comment 'пространные коментарии. по идее эти два поля используются редко и когда будет большая база и нечего делать их можно вынести в отедльню таблицу',
        INDEX photo_id_idx (photo_id),
        INDEX album_id_idx (album_id),
        PRIMARY KEY(id)

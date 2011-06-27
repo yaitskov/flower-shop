@@ -66,6 +66,8 @@ class AlbumElement extends CActiveRecord
       array('photo_id', 'exist', 'className' => 'Photo', 'attributeName' => 'id'),      
       array('is_visible', 'numerical', 'integerOnly'=>true),
       array('photo_id, album_id, itmorder', 'length', 'max'=>20),
+      array('caption', 'length', 'max' => 40),
+      array('description', 'length', 'max' => 2000)      
     );
   }
 
@@ -94,6 +96,8 @@ class AlbumElement extends CActiveRecord
       'album_id' => 'Альбом',
       'itmorder' => 'Вес для упорядочивания',
       'is_visible' => 'Доступно посетителям',
+      'caption' => 'Название',
+      'description' => 'Описание'      
     );
   }
 }

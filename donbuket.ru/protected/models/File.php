@@ -162,7 +162,13 @@ class File extends CActiveRecord {
    * @exception Exception file cannot be deleted or it is not found
    */
   protected function afterDelete() {
-    Yii::app()->filestorage->deleteFile($this->hashName);
+    try {      
+      Yii::app()->filestorage->deleteFile($this->hashName);
+    } catch (Exception $e) {
+      // if no file then there is no problem.
+      if (file_exists(Yii::app()->filestorage->pathToFile($this->hashName)))
+        throw $e;
+    }
   }
 }
 ?>

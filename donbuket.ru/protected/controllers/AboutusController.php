@@ -66,6 +66,33 @@ class AboutusController extends Controller
     }
   }
   /**
+   * @param Integer $aeid - id of AlbumElement object
+   */
+  public function actionUpdate_photo_caption($aeid) {
+
+    $ae = AlbumElement::model()->findByPk($aeid);
+    if (null === $ae)
+      throw new UserEx("Запись альбома $aeid не найдена");
+    if (isset($_POST['AlbumElement'])) {
+      $ae->attributes = $_POST['AlbumElement'];
+      if ($ae->save(true, array('caption', 'description'))) 
+        $this->redirect($this->urlOfPhoto($ae));
+    }
+    $this->render('//upload-album-photo',
+                  array('modelForm' => $ae));
+  }
+  /**
+   * @return String  url to update_shop_gallery with an anchor of secified photo
+   */
+  public function urlOfPhoto($ae) {
+    return $this->createUrl('aboutus/update_shop_gallery',
+                            array(
+                              'id' => FlowerShop::model()->findByAlbum($ae->album)->id,
+                              '#' => 'photo' . $ae->photo_id
+                            )
+    );    
+  }
+  /**
    *
    */
   public function actions(){
@@ -79,12 +106,12 @@ class AboutusController extends Controller
       ),
       'add_photo' => array (
         'class' => 'UploadAlbumPhoto',
-        'viewname' => '//upload', 
+        'viewname' => '//upload-album-photo', 
         'caption' => 'Фотография',
         'fixedRedirect' => $this->getShopFor(),
         'useReturnUrl' => false,
         'cancelPath' => $this->getShopByAlbum(Yii::app()->request->getParam('id')),
-        'uploadForm' => array ( 'class' => 'UploadForm',
+        'uploadForm' => array ( 'class' => 'UploadAlbumPhotoForm',
                                 'fileTypes' => 'jpg, jpeg, png, gif',
                                 'maxSize' => 2*1024*1024,
                                 'fieldName' => 'Фотография',
@@ -246,6 +273,7 @@ class AboutusController extends Controller
                              'delete_shop',
                              'update_map',
                              'add_photo',
+                             'update_photo_caption',
                              'delete_photo',
                              'update_shop_gallery',
                              'delete_map',

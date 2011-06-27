@@ -12,7 +12,9 @@ class AlbumElementGalleryItem implements GalleryItemIf {
     $this->ae = $ae;
   }
   public function getDescription() {
-    return "описание фотки здесь";
+    if (!empty($this->ae->description))
+      return $this->ae->description; 
+    return "Опинсания нет";
   }
   /** original image */
   public function getOriginal() {
@@ -30,7 +32,9 @@ class AlbumElementGalleryItem implements GalleryItemIf {
   } 
   /** @return String file name */
   public function getTitle() {
-    return $this->ae->photo->origName;
+    if (!empty($this->ae->caption))
+      return $this->ae->caption;    
+    return "Файл '" . $this->ae->photo->origName . "'";
   }
 }
 ?>

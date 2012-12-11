@@ -217,6 +217,7 @@ CREATE TABLE orders (
        INDEX responsible_id_idx (responsible_id),
        INDEX posy_id_idx (posy_id),
        index payment_type_id_idx (payment_type_id),
+       -- todo: add some where references to search query which to bring
        PRIMARY KEY(id)) ENGINE = INNODB
        comment 'заказы клиентов';
        
@@ -511,31 +512,110 @@ CREATE TABLE year_statistic (
                     comment 'кол-во посещений зарегистрированных пользователей',
        PRIMARY KEY(id)) ENGINE = INNODB comment 'статистика за год по дням';
 
+create table person_type (
+   id bigint auto_increment,
+   name varchar(40) not null unique comment 'название типа человек',
+   primary key(id)
+) engine = innodb comment 'типы людей которым будут дарить цветы, например друг, подргуа, жена и тд';
+
+create table person_age (
+  id bigint auto_increment,
+  name varchar(40) not null unique comment 'молодой, средний, старый',
+  start_age integer not null,
+  end_age integer not null,
+  primary key(id)
+) engine = innodb comment 'типы возрастов людей';
+
+create table flower_uptime (
+  id bigint auto_increment,
+  average_uptime integer comment 'среднее время в секундах',
+  name varchar(40) character set utf8 collate utf8_unicode_ci not null
+       comment 'текстовая метка например пару дней или 1 неделя',
+  primary key(id)
+) engine = innodb comment 'среднее время жизни цветка';
+
+create table posy_search_history (
+       id BIGint auto_increment,
+       created_at datetime not null comment 'дата и время запроса',
+       pattern_name varchar(40) character set utf8 collate utf8_unicode_ci
+                    comment 'шаблон названия букета',
+       posy_group bigint comment 'ссылка на категорию букетов',
+                  -- наличие отсутствие типов цветков и цветов таблице posy_search_flower
+       person_t bigint   comment 'aaa',
+       person_age bigint comment 'aaa',
+       max_flowers integer comment 'общее максимальное кол-во цветков в букете',
+       min_flowers integer comment 'общее минимальное кол-во цветков в букете',
+       max_colors integer comment 'максимальное кол-во цветков разного цвета те если много значить букет будет пестрый',
+       min_colors integer comment 'минимальное кол-во цветков разного цвета те если 1 значить букет будет однородный',
+       max_type_flowers integer comment 'максимальное кол-во разных типов цветов в букете - есть некоторая зависимость с min_colors',
+       min_type_flowers integer comment 'минимальное кол-во разных типов цветов в букете',
+       max_price integer comment 'максимальная цена',
+       min_price integer comment 'минимальная цена',
+       user_id bigint comment 'автор запроса',
+       -- среднее время жизни цвета цветка не храниться так как
+       -- и так ясно что всех хочется по больше
+       primary key(id)                    
+   ) engine = innodb comment 'журнал запросов на поиск букетов для того чтобы отслеживать тенденции спроса';
+
+
+create table posy_search_flower (
+   id bigint auto_increment,
+   reqid bigint not null  comment '1запрос к которому относится запись',
+   attitude tinyint(1) not null comment 'отношение к записи: 0 - искл 1 - требуется наличие',
+   flower_id bigint not null comment 'тип цветка роза',   
+   foreign key (flower_id) references product_category(id),
+   foreign key (reqid) references posy_search_history(id),
+   primary key(id)
+) engine =innodb comment 'списки требуемых и/или исключаемых типов цветков  в сохраненном запросе';
+
+create table posy_search_color (
+   id bigint auto_increment,
+   reqid bigint not null comment '2запрос к которому относится запись',
+   attitude tinyint(1) not null comment 'отношение к записи: 0 - искл 1 - требуется наличие',
+   color_id bigint  not null  comment 'тип цвета - белый',
+   foreign key (reqid) references posy_search_history(id),
+   foreign key (color_id) references color(id),   
+   primary key(id)
+) engine =innodb comment 'списки требуемых и/или исключаемых типов цвет в сохраненном запросе';
+
 -- добавляем ограничения на внешние ключи
+alter table posy_search_history
+      add constraint posy_search_history_user_id_site_user_id
+      foreign key (user_id)
+      references site_user(id);
+alter table posy_search_history
+      add constraint posy_search_history_id_posy_view_id
+      foreign key (posy_group)
+      references posy_view(id);
+alter table posy_search_history
+      add constraint posy_search_history_person_t_person_type_id
+      foreign key (person_t)
+      references person_type(id);
+alter table posy_search_history
+      add constraint posy_search_history_person_age_person_age_id
+      foreign key (person_age)
+      references person_age(id);
+
 ALTER TABLE album_element
       ADD CONSTRAINT album_element_photo_id_photo_id
       FOREIGN KEY (photo_id)
-      REFERENCES photo(id) ON DELETE CASCADE;
-
+      REFERENCES photo(id) ;
 ALTER TABLE description_file
       ADD CONSTRAINT  description_file_photo_id_photo_id
       FOREIGN KEY (photo_id)
-      REFERENCES photo(id)  ON DELETE CASCADE;
-
+      REFERENCES photo(id);
 ALTER TABLE album_element
       ADD CONSTRAINT album_element_album_id_photo_album_id
       FOREIGN KEY (album_id)
-      REFERENCES photo_album(id)
-      ON DELETE CASCADE;
+      REFERENCES photo_album(id);
 ALTER TABLE color_list_element
       ADD CONSTRAINT color_list_element_list_id_color_list_id
       FOREIGN KEY (list_id)
-      REFERENCES color_list(id)
-      ON DELETE CASCADE;
+      REFERENCES color_list(id);
 ALTER TABLE color_list_element
       ADD CONSTRAINT color_list_element_color_id_color_id
       FOREIGN KEY (color_id)
-      REFERENCES color(id) ON DELETE CASCADE;
+      REFERENCES color(id);
 ALTER TABLE flower
       ADD CONSTRAINT flower_sex_sex_id
       FOREIGN KEY (sex_id)
@@ -543,28 +623,24 @@ ALTER TABLE flower
 ALTER TABLE flower
       ADD CONSTRAINT flower_season_end_season_id
       FOREIGN KEY (season_end)
-      REFERENCES season(id)
-      ON DELETE CASCADE;
+      REFERENCES season(id);
+
 ALTER TABLE flower
       ADD CONSTRAINT flower_publisher_id_site_user_id
       FOREIGN KEY (publisher_id)
-      REFERENCES site_user(id)
-      ON DELETE CASCADE;
+      REFERENCES site_user(id);
 ALTER TABLE payment_type
       ADD CONSTRAINT payment_type_icon_id_photo_id
       FOREIGN KEY (icon_id)
-      REFERENCES photo(id)
-      ON DELETE CASCADE;      
+      REFERENCES photo(id);
 ALTER TABLE flower
       ADD CONSTRAINT flower_icon_id_photo_id
       FOREIGN KEY (icon_id)
-      REFERENCES photo(id)
-      ON DELETE CASCADE;
+      REFERENCES photo(id);
 ALTER TABLE flower
       ADD CONSTRAINT flower_color_id_color_id
       FOREIGN KEY (color_id)
-      REFERENCES color(id)
-      ON DELETE CASCADE;
+      REFERENCES color(id);
 ALTER TABLE flower
       ADD CONSTRAINT flower_category_id_product_category_id
       FOREIGN KEY (category_id)
@@ -572,78 +648,64 @@ ALTER TABLE flower
 ALTER TABLE flower
       ADD CONSTRAINT flower_album_id_photo_album_id
       FOREIGN KEY (album_id)
-      REFERENCES photo_album(id)
-      ON DELETE CASCADE;
+      REFERENCES photo_album(id);
 ALTER TABLE flower_posy
       ADD CONSTRAINT flower_posy_posy_id_posy_id
       FOREIGN KEY (posy_id)
-      REFERENCES posy(id)
-      ON DELETE CASCADE;
+      REFERENCES posy(id);
 ALTER TABLE flower_posy
       ADD CONSTRAINT flower_posy_flower_id_flower_id
       FOREIGN KEY (flower_id)
-      REFERENCES flower(id)
-      ON DELETE CASCADE;
+      REFERENCES flower(id);
 ALTER TABLE flower_shop
       ADD CONSTRAINT flower_shop_views_photo_album_id
       FOREIGN KEY (views)
-      REFERENCES photo_album(id)
-      ON DELETE RESTRICT;
+      REFERENCES photo_album(id)  ON DELETE RESTRICT;
 ALTER TABLE forum_post
       ADD CONSTRAINT forum_post_author_id_site_user_id
       FOREIGN KEY (author_id)
-      REFERENCES site_user(id)
-      ON DELETE CASCADE;
+      REFERENCES site_user(id);
 ALTER TABLE forum_post
       ADD CONSTRAINT forum_post_theme_id_forum_theme_id
       FOREIGN KEY (theme_id)
-      REFERENCES forum_theme(id)
-      ON DELETE CASCADE;
+      REFERENCES forum_theme(id);
 ALTER TABLE forum_theme
       ADD CONSTRAINT forum_theme_author_id_site_user_id
       FOREIGN KEY (author_id)
-      REFERENCES site_user(id)
-      ON DELETE CASCADE;
+      REFERENCES site_user(id);
 ALTER TABLE orders
       ADD CONSTRAINT orders_responsible_id_site_user_id
       FOREIGN KEY (responsible_id)
-      REFERENCES site_user(id)
-      ON DELETE CASCADE;
+      REFERENCES site_user(id);
 ALTER TABLE orders
       ADD CONSTRAINT orders_posy_id_posy_id
       FOREIGN KEY (posy_id)
-      REFERENCES posy(id)
-      ON DELETE CASCADE;
+      REFERENCES posy(id);
+
 ALTER TABLE posy
       ADD CONSTRAINT posy_publisher_id_site_user_id
       FOREIGN KEY (publisher_id)
-      REFERENCES site_user(id)
-      ON DELETE CASCADE;
+      REFERENCES site_user(id);
 ALTER TABLE posy
       ADD CONSTRAINT posy_price_type_id_price_type_id
       FOREIGN KEY (price_type_id)
-      REFERENCES price_type(id)
-      ON DELETE CASCADE;
+      REFERENCES price_type(id);
 ALTER TABLE posy
       ADD CONSTRAINT posy_icon_id_photo_id
       FOREIGN KEY (icon_id)
-      REFERENCES photo(id)
-      ON DELETE CASCADE;
+      REFERENCES photo(id);
 ALTER TABLE posy
       ADD CONSTRAINT posy_album_id_photo_album_id
       FOREIGN KEY (album_id)
-      REFERENCES photo_album(id)
-      ON DELETE CASCADE;
+      REFERENCES photo_album(id);
 ALTER TABLE posy_view_list
       ADD CONSTRAINT posy_view_list_posyview_id_posy_view_id
       FOREIGN KEY (posyview_id)
-      REFERENCES posy_view(id)
-      ON DELETE CASCADE;
+      REFERENCES posy_view(id);
 ALTER TABLE posy_view_list
       ADD CONSTRAINT posy_view_list_posy_id_posy_id
       FOREIGN KEY (posy_id)
-      REFERENCES posy(id)
-      ON DELETE CASCADE;
+      REFERENCES posy(id);
 ALTER TABLE product
       ADD CONSTRAINT product_sun_sun_sense_id
       FOREIGN KEY (sun)
@@ -655,18 +717,15 @@ ALTER TABLE product
 ALTER TABLE product
       ADD CONSTRAINT product_icon_id_photo_id
       FOREIGN KEY (icon_id)
-      REFERENCES photo(id)
-      ON DELETE CASCADE;
+      REFERENCES photo(id);
 ALTER TABLE product
       ADD CONSTRAINT product_color_id_color_id
       FOREIGN KEY (color_id)
-      REFERENCES color(id)
-      ON DELETE CASCADE;
+      REFERENCES color(id);
 ALTER TABLE product
       ADD CONSTRAINT product_category_id_product_category_id
       FOREIGN KEY (category_id)
-      REFERENCES product_category(id)
-      ON DELETE CASCADE;
+      REFERENCES product_category(id);
 ALTER TABLE product
       ADD CONSTRAINT product_blossoming_id_blossoming_id
       FOREIGN KEY (blossoming_id)
@@ -674,8 +733,7 @@ ALTER TABLE product
 ALTER TABLE product
       ADD CONSTRAINT product_album_id_photo_album_id
       FOREIGN KEY (album_id)
-      REFERENCES photo_album(id)
-      ON DELETE CASCADE;
+      REFERENCES photo_album(id);
 ALTER TABLE product_category
       ADD CONSTRAINT product_category_publisher_id_site_user_id
       FOREIGN KEY (publisher_id)
@@ -683,33 +741,33 @@ ALTER TABLE product_category
 ALTER TABLE product_category
       ADD CONSTRAINT product_category_measure_id_measure_id
       FOREIGN KEY (measure_id)
-      REFERENCES measure(id)
-      ON DELETE CASCADE;
+      REFERENCES measure(id);
+
 ALTER TABLE product_category
       ADD CONSTRAINT product_category_icon_id_photo_id
       FOREIGN KEY (icon_id)
-      REFERENCES photo(id)
-      ON DELETE SET NULL;
+      REFERENCES photo(id);
+
 ALTER TABLE site_user
       ADD CONSTRAINT site_user_face_id_photo_id
       FOREIGN KEY (face_id)
-      REFERENCES photo(id)
-      ON DELETE SET NULL;
+      REFERENCES photo(id);
+
 ALTER TABLE used_products
       ADD CONSTRAINT used_products_product_id_product_id
       FOREIGN KEY (product_id)
-      REFERENCES product(id)
-      ON DELETE CASCADE;
+      REFERENCES product(id);
+
 ALTER TABLE used_products
       ADD CONSTRAINT used_products_posy_id_posy_id
       FOREIGN KEY (posy_id)
-      REFERENCES posy(id)
-      ON DELETE CASCADE;
+      REFERENCES posy(id);
+
 ALTER TABLE posy_view
       ADD CONSTRAINT posy_view_icon_id_photo_id
       FOREIGN KEY (icon_id)
-      REFERENCES photo(id)
-      ON DELETE RESTRICT;
+      REFERENCES photo(id);
+
 
        
 

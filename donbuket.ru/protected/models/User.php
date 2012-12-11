@@ -1,20 +1,10 @@
 <?php
 
 /**
- * This is the model class for table "tbl_user".
- *
- * The followings are the available columns in table 'tbl_user':
- * @property integer $id
- * @property string $username
- * @property string $password
- * @property string $email
+ * This is the model class for table "site_user".
  */
 class User extends CActiveRecord
 {
-  /**
-   * Returns the static model of the specified AR class.
-   * @return User the static model class
-   */
   public static function model($className=__CLASS__)
   {
     return parent::model($className);

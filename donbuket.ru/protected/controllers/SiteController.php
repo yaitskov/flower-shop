@@ -10,8 +10,6 @@ class SiteController extends Controller
     $path = base64_decode(preg_replace('/[.](png|jpg|jpeg|gif)$/', '', $hash));
     $path = preg_replace('/[.]/', '', $path);
     $finfo = finfo_open(FILEINFO_MIME_TYPE);
-    //    var_dump($finfo);
-    //    echo "$path\n";
     $path = Yii::app()->filestorage->pathToFile($path);
     if (!file_exists($path))
       $path = Yii::app()->basePath . DIRECTORY_SEPARATOR . '..'
@@ -19,8 +17,6 @@ class SiteController extends Controller
     $mime = finfo_file($finfo, $path);
     finfo_close($finfo);
     header('Content-Type: ' . $mime);
-    //    echo $mime;
-    //    exit;    
     echo file_get_contents($path);    
   }
   public function actionTest() {
@@ -70,10 +66,11 @@ class SiteController extends Controller
    */
   public function actionIndex()
   {
-    $ucname = 'user';
-    $Ucname = ucfirst( $ucname ) . 'Controller';
-    $c = new $Ucname( $ucname );
-    $a = new CInlineAction( $c, 'index' );
+    /*
+     * page will contain news, visitor statistics,
+     * sell statistics, new bukets, new products
+     */
+       
 
     // renders the view file 'protected/views/site/index.php'
     // using the default layout 'protected/views/layouts/main.php'
@@ -92,26 +89,6 @@ class SiteController extends Controller
         else
           $this->render('error', $error);
       }
-  }
-
-  /**
-   * Displays the contact page
-   */
-  public function actionContact()
-  {
-    $model=new ContactForm;
-    if(isset($_POST['ContactForm']))
-      {
-        $model->attributes=$_POST['ContactForm'];
-        if($model->validate())
-          {
-            $headers="From: {$model->email}\r\nReply-To: {$model->email}";
-            mail(Yii::app()->params['adminEmail'],$model->subject,$model->body,$headers);
-            Yii::app()->user->setFlash('contact','Thank you for contacting us. We will respond to you as soon as possible.');
-            $this->refresh();
-          }
-      }
-    $this->render('contact',array('model'=>$model));
   }
 
   /**
@@ -147,5 +124,48 @@ class SiteController extends Controller
   {
     Yii::app()->user->logout();
     $this->redirect(Yii::app()->homeUrl);
+  }
+  /**
+   * it is used by posy-search and posy-groups actions
+   * @return void
+   */
+  protected function prepareMenu() {
+    $this->layout = '//layouts/column2';    
+    $this->menu = array(
+      /* user can create a new posy on this page from accessible site's
+         stuff.  Later user can order it. Administrator can mark it as
+         complete solution and put it in site's catalogue.
+      */      
+      array('label' => 'Конструктор',
+            'url' => array('posy/constructor'),
+            'visible' => !Yii::app()->user->isGuest),  
+      array('label' => 'Новая группа',
+            'url' => array('posy/new_group'),
+            'visible' => Yii::app()->user->isRoot),
+    );      
+  }
+  public function actionProduct() {
+  }
+  /**
+   * 
+   */
+  public function actionPosySearch() {
+    /*
+     * posies are grouped by categories.
+     * one posy can belong to several catergories.
+     */
+    $history = new PosySearchHistory();
+    if (isset($_POST['PosySearchHistory'])) {
+      $history->attributes = $_POST['PosySearchHistory'];
+    }
+    $this->prepareMenu();
+    $this->render('posy-search');      
+  }
+  /**
+   *  output list of posy groups
+   */
+  public function actionPosyByGroup() {
+    $this->prepareMenu();
+    $this->render('posy-groups');
   }
 }
